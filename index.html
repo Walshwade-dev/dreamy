@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minguni Dreamland</title>
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/src/css/styles.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-duotone-thin.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-duotone-solid.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-duotone-regular.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-duotone-light.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-thin.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-solid.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-regular.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/sharp-light.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/duotone-thin.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/duotone-regular.css" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/duotone-light.css" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="header__nav">
+      <!-- Logo (Left Side) -->
+      <div class="header__logo">
+        <div class="header__logo-overlay"></div>
+        <h4>MINGUNI DREAMLAND</h4>
+      </div>
+
+      <!-- Desktop Menu (Center) -->
+      <nav class="header__menu">
+        <ul class="header__menu-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#music">Music</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#comments">Comments</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions (Right Side) -->
+      <div class="header__actions">
+        <!-- Dark Mode Toggle -->
+        <button id="darkModeToggle" title="Toggle Dark Mode">
+          <i id="themeIcon" class="fa fa-moon"></i>
+        </button>
+
+        <!-- Hamburger Button (Mobile Only) -->
+        <button id="hamburgerToggle" class="header__menu-mobile" title="Toggle Menu">
+          <i id="hamburgerIcon" class="fa-sharp fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Fullscreen Menu -->
+      <nav id="mobileMenu" class="mobile__menu hidden">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#music">Music</a>
+        <a href="#events">Events</a>
+        <a href="#comments">Comments</a>
+      </nav>
+    </header>
+
+
+
+    <!-- Hero Section -->
+    <section class="hero jusfify-center" id="home">
+      <div class="hero__left">
+        <h1 class="hero__title-vertical">MINGUNI</h1>
+        <div class="hero__images">
+          <img src="/images/guitar.png" alt="Guitar" />
+          <img src="/images/drums.png" alt="Drums" />
+          <img src="/images/mic.png" alt="Microphone" />
+        </div>
+      </div>
+
+      <div class="hero__right">
+        <h2 class="hero__heading">SADLOVER</h2>
+        <p>
+          Experience the unique Kamba sounds that blend modern beats with classical infusion.
+          Creating a musical journey that resonates with the soul.
+        </p>
+        <div class="hero__buttons">
+          <button class="btn-secondary">
+            <i class="fa-duotone fa-play"></i> Listen Now
+          </button>
+          <button class="btn-primary">Explore</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="jusfify-center-row">
+      <p>2025 <strong>Wade</strong></p>
+      <a href="#projects">
+        <img src="/images/profile-icon.png" alt="Profile icon" />
+        Check out my projects
+      </a>
+    </footer>
+
+    <script type="module" src="/src/js/index.js"></script>
+  </body>
+</html>

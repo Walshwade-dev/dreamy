@@ -1,0 +1,298 @@
+/* === Header Base Styles === */
+.header__nav {
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 0.2rem;
+  background-color: var(--primary-color);
+  color: var(--color-creamson);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* === Logo === */
+.header__logo {
+  font-family: var(--playfair-display);
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--color-white);
+
+  flex-shrink: 0;
+  min-width: fit-content;
+}
+
+/* === Desktop Menu (Hidden by Default) === */
+.header__menu {
+  display: none;
+  gap: 1.25rem;
+}
+
+.header__menu a {
+  font-family: var(--plus-jakarta-sans);
+  font-size: 1rem;
+  color: var(--color-white);
+  transition: color 0.3s ease;
+}
+
+.header__menu a:hover {
+  color: var(--gray-100);
+}
+
+/* === Header Actions (Right Side) === */
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#darkModeToggle {
+  font-size: 1.2rem;
+  color: var(--color-white);
+}
+
+#hamburgerToggle {
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  display: inline-flex;
+}
+
+/* === Mobile Fullscreen Menu === */
+#mobileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  z-index: 40;
+
+  transform: translateX(100%);
+  transition: all 0.5s ease-in-out;
+}
+
+#mobileMenu a {
+  width: 100%;
+  font-family: var(--plus-jakarta-sans);
+  color: var(--color-white);
+  font-size: 1.1rem;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-white);
+}
+
+#mobileMenu a:hover {
+  background-color: var(--color-white);
+  color: var(--secondary-color);
+}
+
+#mobileMenu.active {
+  transform: translateX(0%);
+}
+
+#mobileMenu.hidden {
+  display: flex;
+}
+
+/* === Responsive Breakpoints === */
+/* === Desktop Header Layout === */
+@media screen and (min-width: 900px) {
+  /* === Full Header Layout === */
+    .header__nav,
+    .header__menu,
+    .header__menu-list {
+    margin: 0;
+    padding: 0;
+    }
+
+    .header__menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .header__nav {
+    display: flex;
+    background-color: transparent;
+    justify-content: space-between;
+    align-items: center;
+    height: 74px;
+    }
+
+    .header__logo,
+    .header__menu {
+    flex: 1;
+    overflow: hidden;
+    }
+
+
+    .header__logo {
+    flex:1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: var(--primary-color);
+    }
+
+    .header__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: transparent;
+    gap: 1rem;
+    padding-right: 1rem;
+    flex-shrink: 0; /* prevent shrinking */
+    }
+
+
+
+    .header__logo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    z-index: -1;
+    }
+
+    .header__logo h4 {
+    font-family: var(--playfair-display);
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 2rem;
+    color: var(--color-white);
+    margin-left: 2rem;
+    }
+
+
+
+    .header__menu {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden; /* Prevent content from spilling */
+    max-width: 100%; 
+    min-width: 0;  /* Force it to stay inside the column */
+    box-sizing: border-box;
+    }
+
+    .header__menu-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap; /* Optional: wrap on very narrow screens */
+    justify-content: center;
+    max-width: 100%;
+    }
+
+    .header__menu-list::-webkit-scrollbar {
+    display: none;
+    }
+
+    .header__menu-list li a {
+    font-size: 1rem;
+    color: var(--black-500);
+    font-family: var(--plus-jakarta-sans);
+    }
+
+    .header__menu-list li a:hover {
+        border-bottom: 2px solid var(--secondary-color);
+        color: var(--secondary-color);
+        transition: color 0.15s ease;
+    }
+
+    #darkModeToggle {
+    all: unset;
+    background-color: transparent !important; /* forcefully ensure it's transparent */
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    }
+
+    #darkModeToggle:hover,
+    #darkModeToggle:focus {
+    background-color: transparent;
+    outline: none;
+    }
+
+
+    #darkModeToggle i {
+        color: var(--black-500);
+        font-size: 1.5rem;
+    }
+
+    #darkModeToggle {
+    all: unset;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    appearance: none;
+    -webkit-appearance: none;
+    }
+
+    #darkModeToggle:hover,
+    #darkModeToggle:focus,
+    #darkModeToggle:active {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    }
+
+
+    #hamburgerToggle {
+        display: none; /* Hide hamburger icon on desktop */
+    }
+}
+
+@media screen and (min-width: 1048px) {
+  .header__menu-list {
+    gap: 3rem; /* increase spacing between menu items */
+  }
+
+  .header__menu-list li a {
+    font-size: 1.3rem; /* or 1.4rem for more impact */
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .header__menu-list {
+    gap: 4rem;
+  }
+
+  .header__menu-list li a {
+    font-size: 1.4rem;
+  }
+}
