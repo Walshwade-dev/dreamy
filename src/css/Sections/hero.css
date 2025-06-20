@@ -1,0 +1,169 @@
+/* === Hero Base === */
+.hero {
+  margin-top: 0;
+  padding-top: 0; /* If you want space, control it manually */
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+  /* background-color: var(--color-creamson); */
+  overflow: hidden;   /* clip overflow if needed */
+}
+
+.hero__image-overlay {
+    position: absolute;
+    top: -2%;    
+    right: -2%;
+    z-index: 10;
+    background: transparent;
+    z-index: 1; /* Lower than image, above background */
+}
+
+.hero__image-reflection {
+    font-family: var(--playfair-display);
+    color: var(--color-white);
+    font-size: 5rem;
+    opacity: 0.3;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    filter: blur(1.9px);
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+}
+
+
+.hero__image-overlay img {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  object-fit: cover;
+  filter: grayscale(100%);
+  z-index: 99;
+}
+
+
+/* === Hero Left Section === */
+.hero__left {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* push image to the right */
+  align-items: flex-end;     /* align image at the bottom if desired */
+  background-color: var(--primary-color); /* for testing */
+}
+
+
+.hero__title-vertical {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: -1rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg); /* flow bottom to top */
+  font-family: var(--playfair-display);
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--color-white);
+}
+
+.hero__images {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* === Hero Image === */
+.hero__images img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: contain;
+  align-self: flex-end; /* ensures it hugs the right edge in flex */
+}
+
+
+/* === Hero Right Section === */
+.hero__right {
+  flex: 1;
+  text-align: center;
+  max-width: 600px;
+}
+
+.hero__heading {
+  font-size: 2rem;
+  font-family: var(--poiret-one);
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+.hero__right p {
+  font-family: var(--plus-jakarta-sans);
+  font-size: 1.1rem;
+  color: var(--black-300);
+  margin-bottom: 1.5rem;
+}
+
+/* === Hero Buttons === */
+.hero__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 999px;
+  font-family: var(--plus-jakarta-sans);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* === Hover States === */
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+}
+
+/* === Tablet & Desktop Layouts === */
+@media screen and (min-width: 750px) {
+  .hero {
+    display: flex;
+    flex-direction: row; /* This is what was missing */
+    background-color: transparent;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(100vh - 74px);
+  }
+
+  .hero__left,
+  .hero__right {
+    flex: 1 !important;
+    overflow: hidden;
+  }
+}
