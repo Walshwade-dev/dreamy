@@ -120,7 +120,7 @@
 
   .header__nav{
     height:74px;
-    padding: 1rem 1.5rem 0 0.2rem;
+    /* padding: 1rem 1.5rem 0 0.2rem; */
   }
 
   .header__right-group {
