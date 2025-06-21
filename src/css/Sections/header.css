@@ -2,8 +2,8 @@
 
 .header__nav {
   width: 100vw;
+  height: 74px;
   overflow: hidden;
-  padding: 1rem 1.5rem 0 0.2rem;
   background-color: var(--primary-color);
   color: var(--color-creamson);
   display: flex;
@@ -63,47 +63,49 @@
 
 /* === Mobile Fullscreen Menu === */
 #mobileMenu {
+  display: none;
   position: absolute;
-  top: 100%;
+  top: 0;
   right: 0;
-  width: 100%;
-  max-width: 100%;
+  width: 90%;
   background-color: var(--primary-color);
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem;
-  z-index: 40;
-
+  z-index: 999;
   transform: translateX(100%);
-  transition: all 0.5s ease-in-out;
-}
-
-#mobileMenu a {
-  width: 100%;
-  font-family: var(--plus-jakarta-sans);
-  color: var(--color-white);
-  font-size: 1.1rem;
-  text-align: center;
-  font-weight: 700;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--color-white);
-}
-
-#mobileMenu a:hover {
-  background-color: var(--color-white);
-  color: var(--secondary-color);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+  transform 1.2s ease-in-out,
+  opacity 0.8s ease-in-out;
 }
 
 #mobileMenu.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transform: translateX(0%);
+  opacity: 1;
+  pointer-events: auto;
 }
 
-#mobileMenu.hidden {
-  display: flex;
+#mobileMenu a{
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid var(--color-creamson);
 }
+
+#mobileMenu a:hover,
+#mobileMenu a:focus {
+  background-color: var(--color-creamson);
+  color: var(--black-500);
+  border-bottom: 1px solid var(--black-500);
+}
+
+
 
 /* === Responsive Breakpoints === */
 /* === Desktop Header Layout === */
@@ -115,6 +117,11 @@
     margin: 0;
     padding: 0;
   }
+
+  .header__nav{
+    padding: 1rem 1.5rem 0 0.2rem;
+  }
+
   .header__right-group {
   flex: 1;
   display: flex;
@@ -243,6 +250,7 @@
     background-color: transparent !important;
     box-shadow: none !important;
     appearance: none;
+    margin-right: 3rem;
   }
 
   #darkModeToggle i {

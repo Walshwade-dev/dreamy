@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  min-height: 100vh;
+  min-height: calc(100vh - 74px);
   /* background-color: var(--color-creamson); */
   overflow: hidden;   /* clip overflow if needed */
 }
@@ -151,7 +151,7 @@
 @media (min-width: 900px) {
   .hero {
     flex-direction: row;
-    height: 100vh;
+    height: calc(100vh - 74px);
   }
 
   .hero__left,
@@ -167,6 +167,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .header__nav,
+  .hero {
+    flex-shrink: 0;
+    max-height: 100vh;
   }
 
   .hero__images img {
