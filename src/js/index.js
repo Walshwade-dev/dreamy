@@ -36,7 +36,7 @@ hamburgerBtn.addEventListener("click", () => {
     mobileMenu.classList.remove("active");
     setTimeout(() => {
       mobileMenu.classList.add("hidden");
-    }, 1200); // matches CSS transition duration
+    }, 300); // matches CSS transition duration
     hamburgerIcon.className = "fa-sharp fa-solid fa-bars";
   } else {
     // Animate in
@@ -56,7 +56,7 @@ navLinks.forEach(link => {
       setTimeout(() => {
         mobileMenu.classList.add("hidden");
         hamburgerIcon.className = "fa-sharp fa-solid fa-bars";
-      }, 1200); // delay to let slide-out complete
-    }, 300); // small delay for click feedback
+      }, 300); // delay to let slide-out complete
+    }, 250); // small delay for click feedback
   });
 });

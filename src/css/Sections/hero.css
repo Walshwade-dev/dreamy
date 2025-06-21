@@ -18,7 +18,7 @@
 .hero__image-overlay {
     position: absolute;
     top: 4%;    
-    right: -2%;
+    right: -1%;
     z-index: 10;
     background: transparent;
     z-index: 1; /* Lower than image, above background */
@@ -63,7 +63,7 @@
 .hero__title-vertical {
   position: absolute;
   bottom: 0;
-  left: 0.7rem;
+  left: 0.4rem;
   font-family: var(--playfair-display);
   font-size: 1.5rem;
   font-weight: 900;
