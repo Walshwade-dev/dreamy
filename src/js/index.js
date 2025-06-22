@@ -32,31 +32,38 @@ hamburgerBtn.addEventListener("click", () => {
   const isOpen = mobileMenu.classList.contains("active");
 
   if (isOpen) {
-    // Animate out
+    // Start closing animation
     mobileMenu.classList.remove("active");
-    setTimeout(() => {
-      mobileMenu.classList.add("hidden");
-    }, 300); // matches CSS transition duration
     hamburgerIcon.className = "fa-sharp fa-solid fa-bars";
+
+    // Wait for animation to finish, then hide it
+    setTimeout(() => {
+      mobileMenu.style.display = "none";
+    }, 600); // match longest transition (transform or opacity)
   } else {
-    // Animate in
-    mobileMenu.classList.remove("hidden");
-    mobileMenu.classList.add("active");
-    hamburgerIcon.className = "fa-sharp fa-solid fa-xmark";
+    // Show the menu immediately
+    mobileMenu.style.display = "flex";
+
+    // Slight delay so browser can register the style change before animation
+    setTimeout(() => {
+      mobileMenu.classList.add("active");
+      hamburgerIcon.className = "fa-sharp fa-solid fa-xmark";
+    }, 10);
   }
 });
+
 
 // === CLOSE MENU ON NAV LINK CLICK (WITH DELAY) ===
 const navLinks = mobileMenu.querySelectorAll("a");
 navLinks.forEach(link => {
   link.addEventListener("click", () => {
-    setTimeout(() => {
-      mobileMenu.classList.remove("active");
+    // Close the menu smoothly
+    mobileMenu.classList.remove("active");
+    hamburgerIcon.className = "fa-sharp fa-solid fa-bars";
 
-      setTimeout(() => {
-        mobileMenu.classList.add("hidden");
-        hamburgerIcon.className = "fa-sharp fa-solid fa-bars";
-      }, 300); // delay to let slide-out complete
-    }, 250); // small delay for click feedback
+    setTimeout(() => {
+      mobileMenu.style.display = "none"; // ✅ Use display instead of .hidden
+    }, 600); // Match your transition time
   });
 });
+
