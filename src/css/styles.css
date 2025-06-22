@@ -39,7 +39,7 @@
 
 /* === Dark Mode Palette === */
 :root.dark {
-  --primary-color: #006f7e;
+  --primary-color: #0093a7;
   --secondary-color: #bafffc;
 
   --black-200: #ffffff;
