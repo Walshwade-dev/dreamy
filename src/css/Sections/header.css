@@ -95,14 +95,17 @@
 #mobileMenu a{
   width: 100%;
   text-align: center;
-  border-bottom: 1px solid var(--color-creamson);
+  border-bottom: 1px solid var(--black-200);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--color-white);
 }
 
 #mobileMenu a:hover,
 #mobileMenu a:focus {
-  background-color: var(--color-creamson);
-  color: var(--black-500);
-  border-bottom: 1px solid var(--black-500);
+  background-color: var(--black-200);
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--black-200);
 }
 
 
