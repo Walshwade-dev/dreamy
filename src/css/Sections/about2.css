@@ -1,0 +1,148 @@
+/* === MOBILE-FIRST: Grid for flow === */
+.about {
+  display: grid;
+  grid-template-areas:
+    "journey"
+    "img1"
+    "inspiration"
+    "img2";
+  row-gap: 1.5rem;
+  background-color: var(--color-creamson);
+  font-size: clamp(1.05rem, 1.5vw, 1.15rem);
+  padding: 1rem 0;
+}
+
+/* Assign areas */
+.content-info-journey     { grid-area: journey; }
+.content-info-inspiration { grid-area: inspiration; }
+.about__right .img-box:nth-child(1) { grid-area: img1; }
+.about__right .img-box:nth-child(2) { grid-area: img2; }
+
+/* Flatten containers for Grid */
+.about__left,
+.about__right {
+  display: contents;
+}
+
+/* Common content styling */
+.content-info-journey,
+.content-info-inspiration {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.content-info-journey h2,
+.content-info-journey h4,
+.content-info-inspiration h4 {
+  font-family: var(--playfair-display);
+  font-weight: 600;
+  color: var(--black-300);
+  margin-bottom: 0.5rem;
+}
+
+.content-info-journey h2 {
+  font-size: clamp(2rem, 2.9vw, 2.5rem);
+}
+
+.content-info-journey h4,
+.content-info-inspiration h4 {
+  font-size: clamp(1.5rem, 2.2vw, 1.8rem);
+}
+
+.content-info-journey p,
+.content-info-inspiration p {
+  font-family: var(--poiret-one);
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--black-300);
+  margin-bottom: 0.2rem;
+}
+
+/* Image boxes */
+.img-box {
+  background: var(--primary-color);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 0;
+}
+
+.img-box img {
+  width: 100%;
+  max-width: 320px;
+  object-fit: contain;
+  height: auto;
+  display: block;
+}
+
+/* === TABLET & UP: Flex 50/50 === */
+@media (min-width: 768px) {
+  .about {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    padding: 0;
+  }
+
+  .about__left,
+  .about__right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .content-info-journey,
+  .content-info-inspiration {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 2rem;
+  }
+
+  .content-info-journey h2,
+  .content-info-journey h4,
+  .content-info-inspiration h4 {
+    margin-left: 1.5rem;
+  }
+
+  .content-info-journey p,
+  .content-info-inspiration p {
+    margin: 0 1rem 0 1.5rem;
+    font-size: 1rem;
+  }
+
+  .img-box {
+    flex: 1;
+  }
+
+  .img-box img {
+    max-width: 480px;
+    max-height: 520px;
+  }
+
+  /* Add border to first image */
+  .about__right .img-box:first-of-type {
+    border-bottom: 5px solid var(--secondary-color);
+  }
+
+  .saxa {
+    margin-top: -5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .img-box img {
+    max-width: 520px;
+  }
+
+  .content-info-journey p,
+  .content-info-inspiration p {
+    font-size: 1.2rem;
+    margin: 0 1rem 0 1.5rem;
+  }
+}
