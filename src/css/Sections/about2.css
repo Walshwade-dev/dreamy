@@ -201,9 +201,10 @@
 		align-items: center;
 		gap: 1rem;
 		padding: 12.5px 30px;
+		font-weight: 900;
 		border-radius: 0 100px 100px 0;
 		background-color: var(--secondary-color);
-		color: var(--black-200);
+		color: var(--primary-color);
 	}
 
 	.btn-learn-more:hover,
