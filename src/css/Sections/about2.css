@@ -5,7 +5,8 @@
     "journey"
     "img1"
     "inspiration"
-    "img2";
+    "img2"
+		"learn-btn";
   row-gap: 1.5rem;
   background-color: var(--color-creamson);
   font-size: clamp(1.05rem, 1.5vw, 1.15rem);
@@ -52,11 +53,12 @@
 .content-info-journey p,
 .content-info-inspiration p {
   font-family: var(--poiret-one);
-  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
   line-height: 1.6;
   color: var(--black-300);
   margin-bottom: 0.2rem;
 }
+
 
 /* Image boxes */
 .img-box {
@@ -76,6 +78,33 @@
   object-fit: contain;
   height: auto;
   display: block;
+}
+
+
+.about__button-wrapper {
+	grid-area: learn-btn; /* works with mobile grid */
+	display: flex;
+	justify-content: center;
+	padding: 1rem 0;
+}
+
+.btn-learn-more {
+	background-color: var(--primary-color);
+	color: var(--black-200);
+	font-family: var(--plus-jakarta-sans);
+	padding: 0.75rem 1.5rem;
+	border: none;
+	border-radius: 8px;
+	font-size: 1.2rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+
+.btn-learn-more:hover {
+	background-color: var(--secondary-color);
+	color: var(--color-white);
 }
 
 /* === TABLET & UP: Flex 50/50 === */
@@ -104,6 +133,8 @@
     margin: 0 2rem;
   }
 
+
+
   .content-info-journey h2,
   .content-info-journey h4,
   .content-info-inspiration h4 {
@@ -115,6 +146,25 @@
     margin: 0 1rem 0 1.5rem;
     font-size: 1rem;
   }
+
+  .content-info-journey h2 {
+    margin-top: -2rem;
+  }
+
+  .content-info-journey h4 {
+    margin-top: -0.1rem;
+  }
+
+
+  .content-info-inspiration h4 {
+    margin-top: -8rem;
+  }
+
+  .about__right {
+    margin: 0 0 0 0.1rem;
+		position: relative;
+  }
+
 
   .img-box {
     flex: 1;
@@ -133,6 +183,64 @@
   .saxa {
     margin-top: -5rem;
   }
+
+
+	.about__button-wrapper {
+    position: absolute;
+		left: 0;
+    top: 45.2%;
+    z-index: 2;
+		background-color: transparent;
+		border-radius: 0 100px 100px 0;
+  }
+
+	.btn-learn-more {
+		all: unset;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		padding: 12.5px 30px;
+		border-radius: 0 100px 100px 0;
+		background-color: var(--secondary-color);
+		color: var(--black-200);
+	}
+
+	.btn-learn-more:hover,
+	.btn-learn-more:focus {
+		background-color: var(--black-500);
+		letter-spacing: 0.05rem;
+	}
+
+}
+
+@media (min-width: 900px) {
+  .content-info-journey p,
+  .content-info-inspiration p {
+    margin: 0 1rem 0 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .content-info-journey h2 {
+    margin-top: 1rem;
+  }
+
+  .content-info-journey h4 {
+    margin-top: -0.05rem;
+  }
+
+
+  .content-info-inspiration h4 {
+    margin-top: 4rem;
+  }
+
+  .about__right {
+    margin: 0 0 0 1rem;
+  }
+
+	.about__button-wrapper {
+		top: 45.5%;
+	}
 }
 
 @media (min-width: 1200px) {
@@ -142,7 +250,15 @@
 
   .content-info-journey p,
   .content-info-inspiration p {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     margin: 0 1rem 0 1.5rem;
   }
+
+  .about__right {
+    margin: 0 0 0 0.85rem;
+  }
+
+	.about__button-wrapper {
+		top: 45.6%;
+	}
 }
