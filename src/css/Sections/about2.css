@@ -104,8 +104,11 @@
 
 .btn-learn-more:hover {
 	background-color: var(--secondary-color);
-	color: var(--color-white);
+	color: var(--primary-color);
 }
+
+
+
 
 /* === TABLET & UP: Flex 50/50 === */
 @media (min-width: 768px) {
@@ -188,7 +191,6 @@
 	.about__button-wrapper {
     position: absolute;
 		left: 0;
-    top: 45.2%;
     z-index: 2;
 		background-color: transparent;
 		border-radius: 0 100px 100px 0;
@@ -209,8 +211,22 @@
 
 	.btn-learn-more:hover,
 	.btn-learn-more:focus {
-		background-color: var(--black-500);
+		color: var(--secondary-color);
+		background-color: var(--primary-color);
+		border-top: 2px solid var(--secondary-color);
+		border-bottom: 2px solid var(--secondary-color);
+		border-right: 2px solid var(--secondary-color);
 		letter-spacing: 0.05rem;
+	}
+
+	.btn-learn-more:focus-visible {
+  	outline: 2px dashed var(--primary-color);
+  	outline-offset: 4px;
+	}
+	
+	.about__button-wrapper {
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
 }
@@ -238,10 +254,6 @@
   .about__right {
     margin: 0 0 0 1rem;
   }
-
-	.about__button-wrapper {
-		top: 45.5%;
-	}
 }
 
 @media (min-width: 1200px) {
@@ -258,8 +270,4 @@
   .about__right {
     margin: 0 0 0 0.85rem;
   }
-
-	.about__button-wrapper {
-		top: 45.6%;
-	}
 }
