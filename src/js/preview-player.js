@@ -3,14 +3,14 @@ let previewTimeout;
 let apiReady = false;
 let pendingVideoId = null;
 
-// Load IFrame API if not already present
+// Load YouTube IFrame API once if not already present
 if (typeof YT === "undefined") {
   const script = document.createElement("script");
   script.src = "https://www.youtube.com/iframe_api";
   document.body.appendChild(script);
 }
 
-// Called automatically by YouTube API
+// YouTube API callback
 window.onYouTubeIframeAPIReady = () => {
   player = new YT.Player("ytPlayer", {
     height: "360",
@@ -29,6 +29,7 @@ window.onYouTubeIframeAPIReady = () => {
   });
 };
 
+// Play highlight preview (invisible)
 export function playHighlight(videoId) {
   if (!apiReady || !player || typeof player.loadVideoById !== "function") {
     console.warn("Player not ready yet, retrying...");
@@ -41,20 +42,28 @@ export function playHighlight(videoId) {
   player.loadVideoById(videoId);
 }
 
+// Hide preview modal and stop audio
 export function hidePreviewModal() {
-  document.getElementById("ytPreviewModal").style.display = "none";
+  const modal = document.getElementById("ytPreviewModal");
+  if (modal) modal.style.display = "none";
+
   if (player && typeof player.stopVideo === "function") {
     player.stopVideo();
   }
+
   clearTimeout(previewTimeout);
+
+  // 👋 Show "Say Hi" modal
+  const endModal = document.getElementById("previewEndModal");
+  if (endModal) endModal.classList.remove("hidden");
 }
 
+// Auto-stop after 15 seconds
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     clearTimeout(previewTimeout);
     previewTimeout = setTimeout(() => {
-      player.stopVideo();
       hidePreviewModal();
-    }, 15000); // Stop after 15s
+    }, 15000);
   }
 }

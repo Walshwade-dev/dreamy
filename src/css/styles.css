@@ -115,6 +115,53 @@ img {
   scrollbar-width: none;
 }
 
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--color-creamson);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  color: var(--black-500);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modal-content button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: var(--secondary-color);
+}
+
+
 /* === Responsive Media Queries (Mobile First) === */
 
 /* === Header Media Queries === */

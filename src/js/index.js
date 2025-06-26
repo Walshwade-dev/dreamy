@@ -2,20 +2,20 @@ import { loadMusicCatalogue } from './music-render.js';
 import { playHighlight, hidePreviewModal } from './preview-player.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-  // === CLOSE PREVIEW MODAL ===
+  // === Close Preview Button ===
   const closeBtn = document.getElementById("closePreviewBtn");
-  closeBtn?.addEventListener("click", hidePreviewModal);
+  if (closeBtn) {
+    closeBtn.addEventListener("click", hidePreviewModal);
+  }
 
-  // === DARK MODE ===
+  // === Dark Mode ===
   const darkToggleBtn = document.getElementById("darkModeToggle");
   const icon = darkToggleBtn?.querySelector("i");
   const root = document.documentElement;
 
   function setThemeIcon(isDark) {
     if (!icon) return;
-    icon.className = isDark
-      ? "fa-regular fa-sun-bright"
-      : "fa fa-moon";
+    icon.className = isDark ? "fa-regular fa-sun-bright" : "fa fa-moon";
   }
 
   const savedTheme = localStorage.getItem("theme");
@@ -32,13 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setThemeIcon(isDark);
   });
 
-  // === HAMBURGER TOGGLE ===
+  // === Hamburger Toggle (Mobile Menu) ===
   const hamburgerBtn = document.getElementById("hamburgerToggle");
   const hamburgerIcon = document.getElementById("hamburgerIcon");
   const mobileMenu = document.getElementById("mobileMenu");
 
   hamburgerBtn?.addEventListener("click", () => {
     const isOpen = mobileMenu.classList.contains("active");
+
     if (isOpen) {
       mobileMenu.classList.remove("active");
       hamburgerIcon.className = "fa-sharp fa-solid fa-bars";
@@ -65,6 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // === INIT MUSIC CARDS ===
+  // === Music Cards Initialization ===
   loadMusicCatalogue();
+
+  // === Say Hi Modal Button ===
+  const sayHiBtn = document.getElementById("sayHiBtn");
+  if (sayHiBtn) {
+    sayHiBtn.addEventListener("click", () => {
+      alert("👋 You're awesome! Stay tuned for more vibes!");
+      document.getElementById("previewEndModal").classList.add("hidden");
+    });
+  }
 });
