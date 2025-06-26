@@ -1,5 +1,8 @@
 import { fetchYouTubeVideos } from './youtube-fetch.js';
 import { customCovers } from './custom-covers.js';
+import { playHighlight } from './preview-player.js';
+
+let lastTapTime = 0;
 
 export async function loadMusicCatalogue() {
   const cardsContainer = document.querySelector(".music-catalogue__cards");
@@ -38,12 +41,22 @@ export async function loadMusicCatalogue() {
     cardsContainer.appendChild(card);
   });
 
-  // ✅ Move listener here AFTER cards are created
+  // Listen for clicks
   cardsContainer.addEventListener("click", (e) => {
     const playBtn = e.target.closest(".play-btn");
     if (playBtn) {
       const videoId = playBtn.dataset.videoId;
-      window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
+      const now = Date.now();
+
+      if (now - lastTapTime < 400) {
+        // Double-tap detected: redirect to YouTube
+        window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
+        lastTapTime = 0;
+      } else {
+        // Single-tap: play preview
+        playHighlight(videoId);
+        lastTapTime = now;
+      }
     }
   });
 }
