@@ -1,4 +1,6 @@
 // src/js/youtube-fetch.js
+import { fallbackVideos } from './fallback-videos.js';
+
 const API_KEY = 'AIzaSyDvLZ7SENnqbWlUPR2YsWXGratQqdDvPIE';
 const CHANNEL_ID = 'UCd7g2bMxgJHncQn3htSDUMQ';
 const MAX_RESULTS = 10;
@@ -10,7 +12,7 @@ export async function fetchYouTubeVideos() {
     const response = await fetch(endpoint);
     const data = await response.json();
 
-    if (!data.items) {
+    if (!data.items || !Array.isArray(data.items)) {
       throw new Error("No video data found. Check quota or channel ID.");
     }
 
@@ -24,7 +26,7 @@ export async function fetchYouTubeVideos() {
       defaultThumb: item.snippet.thumbnails.high.url,
     }));
   } catch (err) {
-    console.error("YouTube Fetch Error:", err);
-    return [];
+    console.warn("⚠️ YouTube Fetch Failed, using fallback videos.");
+    return fallbackVideos;
   }
 }

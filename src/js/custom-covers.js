@@ -5,4 +5,5 @@ export const customCovers = {
   'AM32gC3arEI': '/images/song1.png',
   '8VzM_jA6HBE': '/images/kwongela.png',
   'WS0o9gKsnRY': '/images/memories.png',
+  'JTCiX7GTHW4': '/images/gamble1.png',
 };

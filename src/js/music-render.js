@@ -27,7 +27,7 @@ export async function loadMusicCatalogue() {
       </div>
       <div class="music-card__info">
         <h3 class="music-title" title="${video.title}">${shortTitle}</h3>
-        <p class="release-date">Released: ${video.releaseDate}</p>
+        <p class="release-date">${video.releaseDate}</p>
         <div class="card-actions">
           <button class="btn-like"><i class="fa-solid fa-heart"></i></button>
           <button class="btn-share"><i class="fa-solid fa-paper-plane"></i></button>
