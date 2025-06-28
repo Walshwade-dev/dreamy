@@ -1,15 +1,21 @@
 /* === MOBILE-FIRST: Grid for flow === */
 .about {
+  position: relative;
+  margin-top: 0;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-size: 1.05rem;
+
   display: grid;
   grid-template-areas:
     "journey"
     "img1"
     "inspiration"
     "img2"
-		"learn-btn";
+    "learn-btn";
   row-gap: 1.5rem;
   background-color: var(--color-creamson);
-  font-size: clamp(1.05rem, 1.5vw, 1.15rem);
   padding: 1rem 0;
 }
 
@@ -81,62 +87,75 @@
 }
 
 
+/* Button for mobile grid */
 .about__button-wrapper {
-	grid-area: learn-btn; /* works with mobile grid */
-	display: flex;
-	justify-content: center;
-	padding: 1rem 0;
+  grid-area: learn-btn;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }
 
 .btn-learn-more {
-	background-color: var(--primary-color);
-	color: var(--black-200);
-	font-family: var(--plus-jakarta-sans);
-	padding: 0.75rem 1.5rem;
-	border: none;
-	border-radius: 8px;
-	font-size: 1.2rem;
-	font-weight: 500;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
+  background-color: var(--primary-color);
+  color: var(--black-200);
+  font-family: var(--plus-jakarta-sans);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-
 
 .btn-learn-more:hover {
-	background-color: var(--secondary-color);
-	color: var(--primary-color);
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }
-
-
 
 
 /* === TABLET & UP: Flex 50/50 === */
 @media (min-width: 768px) {
   .about {
+    all: unset;
     display: flex;
     flex-direction: row;
+    width: 100vw;
     height: 100vh;
-    padding: 0;
+    overflow: hidden;
   }
 
   .about__left,
   .about__right {
-    flex: 1;
+    width: 50vw;
+    height: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+  }
+
+  .about__left {
+    padding: 1.5rem 2rem;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .about__right {
+    position: relative;
     justify-content: space-between;
   }
 
   .content-info-journey,
   .content-info-inspiration {
+    all: unset;
+    padding: 0;
+    margin: 0;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 2rem;
   }
-
-
 
   .content-info-journey h2,
   .content-info-journey h4,
@@ -147,115 +166,93 @@
   .content-info-journey p,
   .content-info-inspiration p {
     margin: 0 1rem 0 1.5rem;
-    font-size: 1rem;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    line-height: 1.5;
+    max-width: 100%;
+    word-wrap: break-word;
   }
 
   .content-info-journey h2 {
-    margin-top: -2rem;
+    margin-top: 1rem;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    line-height: 1.2;
   }
 
-  .content-info-journey h4 {
-    margin-top: -0.1rem;
-  }
-
-
+  .content-info-journey h4,
   .content-info-inspiration h4 {
-    margin-top: -8rem;
+    margin-top: 0.3rem;
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
   }
 
-  .about__right {
-    margin: 0 0 0 0.1rem;
-		position: relative;
+  .img-box.fullwidth {
+    flex: 1 1 50%;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
   }
 
-
-  .img-box {
-    flex: 1;
+  .img-box.fullwidth img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
-  .img-box img {
-    max-width: 480px;
-    max-height: 520px;
-  }
-
-  /* Add border to first image */
   .about__right .img-box:first-of-type {
     border-bottom: 5px solid var(--secondary-color);
   }
 
   .saxa {
-    margin-top: -5rem;
+    margin-top: -10rem;
   }
 
-
-	.about__button-wrapper {
-    position: absolute;
-		left: 0;
-    z-index: 2;
-		background-color: transparent;
-		border-radius: 0 100px 100px 0;
-  }
-
-	.btn-learn-more {
-		all: unset;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 1rem;
-		padding: 12.5px 30px;
-		font-weight: 900;
-		border-radius: 0 100px 100px 0;
-		background-color: var(--secondary-color);
-		color: var(--primary-color);
-	}
-
-	.btn-learn-more:hover,
-	.btn-learn-more:focus {
-		color: var(--secondary-color);
-		background-color: var(--primary-color);
-		border-top: 2px solid var(--secondary-color);
-		border-bottom: 2px solid var(--secondary-color);
-		border-right: 2px solid var(--secondary-color);
-		letter-spacing: 0.05rem;
-	}
-
-	.btn-learn-more:focus-visible {
-  	outline: 2px dashed var(--primary-color);
-  	outline-offset: 4px;
-	}
-	
-	.about__button-wrapper {
-		top: 50%;
-		transform: translateY(-50%);
-	}
-
+.about__button-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0; /* stays flush with left edge */
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: transparent;
+  border-radius: 0 100px 100px 0;
+  padding: 0;
 }
 
-@media (min-width: 900px) {
-  .content-info-journey p,
-  .content-info-inspiration p {
-    margin: 0 1rem 0 1.5rem;
-    font-size: 1.2rem;
+
+.btn-learn-more {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 12.5px 30px;
+  font-weight: 900;
+  border-radius: 0 100px 100px 0;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+  .btn-learn-more:hover,
+  .btn-learn-more:focus {
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border-top: 2px solid var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    border-right: 2px solid var(--secondary-color);
+    letter-spacing: 0.05rem;
   }
 
-  .content-info-journey h2 {
-    margin-top: 1rem;
-  }
-
-  .content-info-journey h4 {
-    margin-top: -0.05rem;
-  }
-
-
-  .content-info-inspiration h4 {
-    margin-top: 4rem;
-  }
-
-  .about__right {
-    margin: 0 0 0 1rem;
+  .btn-learn-more:focus-visible {
+    outline: 2px dashed var(--primary-color);
+    outline-offset: 4px;
   }
 }
 
+
+/* === LARGER DESKTOP === */
 @media (min-width: 1200px) {
   .img-box img {
     max-width: 520px;
@@ -265,9 +262,5 @@
   .content-info-inspiration p {
     font-size: 1.6rem;
     margin: 0 1rem 0 1.5rem;
-  }
-
-  .about__right {
-    margin: 0 0 0 0.85rem;
   }
 }

@@ -62,6 +62,10 @@ html, body {
   box-sizing: border-box;
 }
 
+.hidden {
+  display: none;
+}
+
 
 body {
   font-family: var(--plus-jakarta-sans);
