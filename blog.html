@@ -1,0 +1,57 @@
+<!-- blog.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog – Minguni Dreamland</title>
+  <link rel="stylesheet" href="src/css/blog.css" />
+  <link rel="stylesheet" href="src/css/global.css" />
+</head>
+<body class="blog-body">
+  <main class="blog-under-construction">
+    <div class="construction">
+        <h1>🚧 Blog Under Construction 🚧</h1>
+        <img src="/images/blog.png" alt="Under Construction" class="construction-image">
+
+        <p id="countdownText">Redirecting to home in <span id="countdown">10</span> seconds...</p>
+
+        <button class="go-back" onclick="window.location.href='index.html'">Go Back</button>
+        <button id="themeToggle">🌓 Toggle Theme</button>
+    </div>
+  </main>
+  <script>
+    // === Auto-redirect with countdown ===
+    let timeLeft = 10;
+    const countdownEl = document.getElementById("countdown");
+
+    const timer = setInterval(() => {
+        timeLeft--;
+        countdownEl.textContent = timeLeft;
+        if (timeLeft === 0) {
+        clearInterval(timer);
+        window.location.href = "index.html";
+        }
+    }, 1000);
+
+    // === Theme Toggle ===
+    const themeToggle = document.getElementById("themeToggle");
+    const root = document.documentElement;
+
+    themeToggle.addEventListener("click", () => {
+        root.classList.toggle("dark");
+        if (root.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        } else {
+        localStorage.setItem("theme", "light");
+        }
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        root.classList.add("dark");
+    }
+    </script>
+
+</body>
+</html>

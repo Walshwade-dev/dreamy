@@ -4,6 +4,7 @@
 
 
 /* === Sections (Mobile First Modules) === */
+@import url('./blog.css');
 @import url('./Sections/header.css');
 @import url('./Sections/hero.css');
 @import url('./Sections/about2.css');
