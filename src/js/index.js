@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         const modal = document.getElementById("previewEndModal");
         if (modal) modal.classList.remove("hidden");
+        showDefaultHeroImage();
       }, 8000); // match spin duration
     }
   });
