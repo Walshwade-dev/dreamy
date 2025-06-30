@@ -36,6 +36,9 @@
 .content-info-inspiration {
   width: 90%;
   margin: 0 auto;
+  opacity: 0;
+  transform: translateX(80px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .content-info-journey h2,
@@ -105,13 +108,45 @@
   font-size: 1.2rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
+  animation-delay: 0.5s;
 }
 
 .btn-learn-more:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
 }
+
+.content-info-journey.animate,
+.content-info-inspiration.animate {
+  animation: infoSlideInFromRight 0.8s ease-out forwards;
+}
+
+
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translate(100%, -50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-50%);
+    opacity: 1;
+  }
+}
+
+
+@keyframes infoSlideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 
 
 /* === TABLET & UP: Flex 50/50 === */
@@ -155,7 +190,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
+
+  .content-info-journey.animate {
+    animation-delay: 0.1s;
+  }
+
+  .content-info-inspiration.animate {
+    animation-delay: 0.3s;
+  }
+
 
   .content-info-journey h2,
   .content-info-journey h4,
@@ -211,12 +259,14 @@
 .about__button-wrapper {
   position: absolute;
   top: 50%;
-  left: 0; /* stays flush with left edge */
+  left: 0;
   transform: translateY(-50%);
   z-index: 2;
   background-color: transparent;
   border-radius: 0 100px 100px 0;
   padding: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 
@@ -248,6 +298,10 @@
   .btn-learn-more:focus-visible {
     outline: 2px dashed var(--primary-color);
     outline-offset: 4px;
+  }
+
+  .about__button-wrapper.animate {
+    animation: slideInFromRight 0.8s ease-out forwards;
   }
 }
 

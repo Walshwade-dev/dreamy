@@ -1,3 +1,6 @@
+import { showDefaultHeroImage } from './index.js'; // ← this won't work in modules unless exported properly
+
+
 let player;
 let previewTimeout;
 let apiReady = false;

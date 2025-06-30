@@ -17,6 +17,19 @@
   font-style: normal;
 }
 
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 0.8s;
+  transition-timing-function: ease-out;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+  transform: none;
+}
+
+
 
 /* === Root Theme Variables === */
 :root {
