@@ -2,39 +2,15 @@ let player;
 let previewTimeout;
 let apiReady = false;
 let pendingVideoId = null;
+let highlightManuallyTriggered = false;
 
-// Load YouTube IFrame API once if not already present
-if (typeof YT === "undefined") {
-  const script = document.createElement("script");
-  script.src = "https://www.youtube.com/iframe_api";
-  document.body.appendChild(script);
-}
+// ⏯️ Called externally
+export function playHighlight(videoId, isManual = false) {
+  highlightManuallyTriggered = isManual;
 
-// YouTube API callback
-window.onYouTubeIframeAPIReady = () => {
-  player = new YT.Player("ytPlayer", {
-    height: "360",
-    width: "640",
-    videoId: "",
-    events: {
-      onReady: () => {
-        apiReady = true;
-        if (pendingVideoId) {
-          playHighlight(pendingVideoId);
-          pendingVideoId = null;
-        }
-      },
-      onStateChange: onPlayerStateChange,
-    },
-  });
-};
-
-// Play highlight preview (invisible)
-export function playHighlight(videoId) {
   if (!apiReady || !player || typeof player.loadVideoById !== "function") {
-    console.warn("Player not ready yet, retrying...");
     pendingVideoId = videoId;
-    setTimeout(() => playHighlight(videoId), 500);
+    setTimeout(() => playHighlight(videoId, isManual), 500);
     return;
   }
 
@@ -42,7 +18,7 @@ export function playHighlight(videoId) {
   player.loadVideoById(videoId);
 }
 
-// Hide preview modal and stop audio
+// 🧹 Stop + show end modal
 export function hidePreviewModal() {
   const modal = document.getElementById("ytPreviewModal");
   if (modal) modal.style.display = "none";
@@ -53,17 +29,20 @@ export function hidePreviewModal() {
 
   clearTimeout(previewTimeout);
 
-  // 👋 Show "Say Hi" modal
-  const endModal = document.getElementById("previewEndModal");
-  if (endModal) endModal.classList.remove("hidden");
+  // Fire a custom event only if not manually triggered
+  if (!highlightManuallyTriggered) {
+    window.dispatchEvent(new Event("highlightPreviewEnded"));
+  }
+
+  highlightManuallyTriggered = false; // reset after use
 }
 
-// Auto-stop after 15 seconds
+// 🎯 Called automatically by player
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     clearTimeout(previewTimeout);
     previewTimeout = setTimeout(() => {
-      hidePreviewModal();
+      hidePreviewModal(); // Will not re-fire modal if manually triggered
     }, 15000);
   }
 }

@@ -93,14 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
       AOS.refresh();
 
       // Play the song snippet
-      playHighlight(videoId);
+      // Play the song snippet
+      playHighlight(videoId, true); // ← manually triggered
 
-      // === Trigger Modal after spin (8s)
-      setTimeout(() => {
-        const modal = document.getElementById("previewEndModal");
-        if (modal) modal.classList.remove("hidden");
-        showDefaultHeroImage();
-      }, 8000); // match spin duration
+
+      
     }
   });
 
@@ -175,4 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     observer.observe(aboutSection);
   }
+
+  // This remains
+window.addEventListener("highlightPreviewEnded", () => {
+  const modal = document.getElementById("previewEndModal");
+  if (modal) modal.classList.remove("hidden");
+  showDefaultHeroImage();
+});
+
 });
