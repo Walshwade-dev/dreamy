@@ -98,6 +98,7 @@
   padding-right: 0; /* flush against edge */
   overflow: visible;
   pointer-events: none; /* ignore hover blocks */
+
 }
 
 .now-playing-hero {
@@ -266,18 +267,102 @@
 }
 
 .hero-content__explore-button {
-  background-color: var(--primary-color);
-  padding: 1rem 0.5rem;
-  color: var(--black-200);
-  border-radius: 2rem;
+  position: relative;
+  width: 50%;
+  margin: 0 auto 1rem auto;
+  padding: 0.8rem 0.4rem;
   font-size: 1.3rem;
+  font-family: var(--plus-jakarta-sans);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.8rem;
-  margin: 0 auto 1rem auto;
-  padding: 0.8rem 0.4rem;
+  color: var(--black-200);
+  background-color: var(--primary-color);
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 1;
 }
+
+/* Flash layer */
+.hero-content__explore-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 300%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: skewX(-20deg);
+  z-index: 0;
+}
+
+/* Animate flash */
+.hero-content__explore-button:hover::before,
+.hero-content__explore-button:focus::before {
+  animation: flashSweep 0.4s forwards;
+}
+
+@keyframes flashSweep {
+  0% {
+    left: -150%;
+    opacity: 0.7;
+  }
+  50% {
+    left: 0%;
+    opacity: 1;
+  }
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}
+
+/* Icon styling */
+.hero-content__explore-button i {
+  transition: transform 0.4s ease, margin 0.4s ease;
+  font-size: 1.3rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Text styling */
+.hero-content__explore-button .explore {
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover State */
+.hero-content__explore-button:hover,
+.hero-content__explore-button:focus {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+/* Move Explore text out and hide */
+.hero-content__explore-button:hover .explore,
+.hero-content__explore-button:focus .explore {
+  display: none;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Center & enlarge icon when text disappears */
+.hero-content__explore-button:hover i,
+.hero-content__explore-button:focus i {
+  transform: scale(1.8);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 /* === Hover States === */
 .hero-content__listen-button:hover,
@@ -290,11 +375,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* ✨ subtle lift */
 }
 
-.hero-content__explore-button:focus,
-.hero-content__explore-button:hover {
-  background-color: var(--black-200);
-  color: var(--primary-color);
-}
+
 
 /* === Hero advert section ===  */
 .hero-content__mini-advert {
@@ -520,7 +601,6 @@
 
   .hero-content__explore-button:focus,
   .hero-content__explore-button:hover {
-    background-color: var(--black-200);
     color: var(--primary-color);
   }
 
