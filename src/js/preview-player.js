@@ -29,15 +29,15 @@ export function hidePreviewModal() {
 
   clearTimeout(previewTimeout);
 
-  // Fire a custom event only if not manually triggered
-  if (!highlightManuallyTriggered) {
-    window.dispatchEvent(new CustomEvent("highlightPreviewEnded", {
-      detail: { manuallyTriggered: highlightManuallyTriggered }
-    }));
-  }
+  // ✅ Always fire event, indicate source
+  const event = new CustomEvent("highlightPreviewEnded", {
+    detail: { manuallyTriggered: highlightManuallyTriggered }
+  });
+  window.dispatchEvent(event);
 
-  highlightManuallyTriggered = false; // reset after use
+  highlightManuallyTriggered = false; // reset flag
 }
+
 
 // 🎯 Called automatically by player
 function onPlayerStateChange(event) {

@@ -56,50 +56,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Listen Now Button Logic ===
   listenNowBtn?.addEventListener("click", () => {
-    const musicCards = [...cardsContainer.querySelectorAll(".music-card")];
-    if (!musicCards.length) return;
+  const musicCards = [...cardsContainer.querySelectorAll(".music-card")];
+  if (!musicCards.length) return;
 
-    const randomCard = musicCards[Math.floor(Math.random() * musicCards.length)];
-    const videoId = randomCard.querySelector(".play-btn")?.dataset?.videoId;
-    const imgEl = randomCard.querySelector("img");
-    const coverSrc = imgEl?.src;
+  const randomCard = musicCards[Math.floor(Math.random() * musicCards.length)];
+  const videoId = randomCard.querySelector(".play-btn")?.dataset?.videoId;
+  const imgEl = randomCard.querySelector("img");
+  const coverSrc = imgEl?.src;
 
-    heroImageContainer.innerHTML = ''; // Clear whatever is there
+  heroImageContainer.innerHTML = ''; // Clear current content
 
-    if (videoId && coverSrc) {
-      const wrapper = document.createElement("div");
-      wrapper.className = "now-playing-wrapper spinning-cd";
+  if (videoId && coverSrc) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "now-playing-wrapper spinning-cd";
 
-      // Create CD disc layer
-      const disc = document.createElement("div");
-      disc.className = "cd-disc";
+    const disc = document.createElement("div");
+    disc.className = "cd-disc";
 
-      const img = document.createElement("img");
-      img.src = coverSrc;
-      img.alt = "Now Playing";
-      img.className = "cd-image";
+    const img = document.createElement("img");
+    img.src = coverSrc;
+    img.alt = "Now Playing";
+    img.className = "cd-image";
 
-      disc.appendChild(img);
+    disc.appendChild(img);
 
-      // Inner hollow circle
-      const centerHole = document.createElement("div");
-      centerHole.className = "cd-hole";
+    const centerHole = document.createElement("div");
+    centerHole.className = "cd-hole";
+    disc.appendChild(centerHole);
 
-      disc.appendChild(centerHole);
-      wrapper.appendChild(disc);
-      heroImageContainer.appendChild(wrapper);
+    wrapper.appendChild(disc);
+    heroImageContainer.appendChild(wrapper);
 
-      // Re-trigger AOS animations (if necessary)
-      AOS.refresh();
+    AOS.refresh();
 
-      // Play the song snippet
-      // Play the song snippet
-      playHighlight(videoId, true); // ← manually triggered
+    playHighlight(videoId, true); // manually triggered
 
+    // ✅ Restore state after 15 seconds
+    setTimeout(() => {
+      hidePreviewModal();
+      showDefaultHeroImage();
+      const modal = document.getElementById("previewEndModal");
+      if (modal) modal.classList.remove("hidden");
+    }, 15000);
+  }
+});
 
-      
-    }
-  });
 
   // === Dark Mode Logic ===
   const icon = darkToggleBtn?.querySelector("i");
@@ -174,16 +175,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // This remains
-  window.addEventListener("highlightPreviewEnded", (e) => {
-    const { manuallyTriggered } = e.detail || {};
+    window.addEventListener("highlightPreviewEnded", (e) => {
+    const isManual = e.detail?.manuallyTriggered;
 
-    const modal = document.getElementById("previewEndModal");
-    if (!manuallyTriggered && modal) {
-      modal.classList.remove("hidden");
+    // Show modal only for automatic preview endings
+    if (!isManual) {
+      const modal = document.getElementById("previewEndModal");
+      if (modal) modal.classList.remove("hidden");
     }
 
-    showDefaultHeroImage(); // Always restore hero instruments
+    // ✅ Always restore the default hero image
+    showDefaultHeroImage();
   });
+
 
 
 });
