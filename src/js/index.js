@@ -174,10 +174,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // This remains
-window.addEventListener("highlightPreviewEnded", () => {
-  const modal = document.getElementById("previewEndModal");
-  if (modal) modal.classList.remove("hidden");
-  showDefaultHeroImage();
-});
+  window.addEventListener("highlightPreviewEnded", (e) => {
+    const { manuallyTriggered } = e.detail || {};
+
+    const modal = document.getElementById("previewEndModal");
+    if (!manuallyTriggered && modal) {
+      modal.classList.remove("hidden");
+    }
+
+    showDefaultHeroImage(); // Always restore hero instruments
+  });
+
 
 });

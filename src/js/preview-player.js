@@ -31,7 +31,9 @@ export function hidePreviewModal() {
 
   // Fire a custom event only if not manually triggered
   if (!highlightManuallyTriggered) {
-    window.dispatchEvent(new Event("highlightPreviewEnded"));
+    window.dispatchEvent(new CustomEvent("highlightPreviewEnded", {
+      detail: { manuallyTriggered: highlightManuallyTriggered }
+    }));
   }
 
   highlightManuallyTriggered = false; // reset after use
