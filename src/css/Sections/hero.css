@@ -296,9 +296,9 @@
   left: -150%;
   width: 300%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--black-400);
   transform: skewX(-20deg);
-  z-index: 0;
+  z-index: -1;
 }
 
 /* Animate flash */
@@ -310,7 +310,7 @@
 @keyframes flashSweep {
   0% {
     left: -150%;
-    opacity: 0.7;
+    opacity: 0.8;
   }
   50% {
     left: 0%;
@@ -343,7 +343,7 @@
 .hero-content__explore-button:focus {
   background-color: transparent;
   color: var(--primary-color);
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--primary-color) !important;
 }
 
 /* Move Explore text out and hide */
