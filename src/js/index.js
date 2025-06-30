@@ -20,7 +20,13 @@ export function showDefaultHeroImage() {
 
 document.addEventListener("DOMContentLoaded", () => {
   // === AOS Initialization ===
-  AOS.init({ duration: 800, offset: 120, once: false });
+  AOS.init(
+    { 
+    duration: 800, 
+    offset: 120, 
+    once: false,
+    disable:false //force enable on mobile.
+  });
 
   // === DOM Elements (MOVED INSIDE DOMContentLoaded) ===
   const listenNowBtn = document.getElementById("listenNowBtn");
@@ -160,7 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
         journeyContent.classList.toggle("animate", visible);
         inspirationContent.classList.toggle("animate", visible);
       },
-      { threshold: 0.3 }
+      { threshold: 0.15,
+        rootMargin: "0px 0px -20% 0px", // triggers before fully visible
+       }
+      
     );
 
     observer.observe(aboutSection);
