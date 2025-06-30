@@ -148,7 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const inspirationContent = document.querySelector(".content-info-inspiration");
 
   if (
-    window.innerWidth >= 768 &&
     aboutSection &&
     aboutButtonWrapper &&
     journeyContent &&
