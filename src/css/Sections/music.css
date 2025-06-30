@@ -77,11 +77,10 @@
 .music-card__info {
   position: relative;
   height: 6.5rem;
-  padding: 0.4rem 0.1rem 0 1rem;
+  padding: 0.4rem 0.1rem 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: -1rem;
 }
 
 .music-title {
@@ -124,13 +123,13 @@
 
 .card-actions button:hover {
   transform: scale(1.15);
-  color: var(--black-500);
+  color: red;
 }
 
 .play-btn {
   position: absolute;
-  bottom: 0rem;
-  right: 1.8rem;
+  bottom: 0.9rem;
+  right: 1rem;
   width: 2.5rem;
   height: 2.5rem;
   background-color: var(--secondary-color);
