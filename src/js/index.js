@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
   loadMusicCatalogue();
 
   // === Listen Now Button Logic ===
-  listenNowBtn?.addEventListener("click", () => {
+// === Listen Now Button Logic ===
+listenNowBtn?.addEventListener("click", () => {
   const musicCards = [...cardsContainer.querySelectorAll(".music-card")];
   if (!musicCards.length) return;
 
@@ -64,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const imgEl = randomCard.querySelector("img");
   const coverSrc = imgEl?.src;
 
-  heroImageContainer.innerHTML = ''; // Clear current content
+  heroImageContainer.innerHTML = '';
 
   if (videoId && coverSrc) {
     const wrapper = document.createElement("div");
@@ -82,24 +83,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const centerHole = document.createElement("div");
     centerHole.className = "cd-hole";
-    disc.appendChild(centerHole);
 
+    disc.appendChild(centerHole);
     wrapper.appendChild(disc);
     heroImageContainer.appendChild(wrapper);
 
     AOS.refresh();
 
-    playHighlight(videoId, true); // manually triggered
+    // Play snippet
+    playHighlight(videoId, true); // manually triggered = no event
 
-    // ✅ Restore state after 15 seconds
+    // Fallback: Show modal after 15s
     setTimeout(() => {
-      hidePreviewModal();
-      showDefaultHeroImage();
       const modal = document.getElementById("previewEndModal");
-      if (modal) modal.classList.remove("hidden");
-    }, 15000);
+      if (modal) {
+        if(modal.classList.contains("hidden")){
+          modal.classList.remove("hidden")
+        } else {
+          modal.classList.add("hidden");
+      }
+    }
+      showDefaultHeroImage();
+    }, 15000); // match player timeout
   }
 });
+
 
 
   // === Dark Mode Logic ===
