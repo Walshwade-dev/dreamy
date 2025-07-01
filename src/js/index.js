@@ -1,5 +1,5 @@
 import { loadMusicCatalogue } from './music-render.js';
-import { playHighlight, hidePreviewModal } from './preview-player.js';
+import { playHighlight, hidePreviewModal, allowFullPlayback } from './preview-player.js';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -19,128 +19,169 @@ export function showDefaultHeroImage() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // === AOS Initialization ===
-  AOS.init(
-    { 
-    duration: 800, 
-    offset: 120, 
-    once: false,
-    disable:false //force enable on mobile.
-  });
+  // === AOS Animations ===
+  AOS.init({ duration: 800, offset: 120 });
 
-  // === DOM Elements (MOVED INSIDE DOMContentLoaded) ===
+  // === DOM Elements ===
   const listenNowBtn = document.getElementById("listenNowBtn");
   const cardsContainer = document.querySelector(".music-catalogue__cards");
   const heroImageContainer = document.getElementById("heroImageContainer");
+
+  const modal = document.getElementById("previewEndModal");
   const closeBtn = document.getElementById("closePreviewBtn");
-  const sayHiBtn = document.getElementById("sayHiBtn");
-  const darkToggleBtn = document.getElementById("darkModeToggle");
-  const hamburgerBtn = document.getElementById("hamburgerToggle");
-  const hamburgerIcon = document.getElementById("hamburgerIcon");
-  const mobileMenu = document.getElementById("mobileMenu");
+  const userNameInput = document.getElementById("userNameInput");
+  const greetingText = document.getElementById("greetingText");
+  const unlockBtn = document.getElementById("unlockBtn");
 
-  // === Set default hero image on page load ===
+  const shareBtns = document.querySelectorAll(".share-btn");
+
+  let hasShared = false;
+  let userName = "";
+
+  // === Init state ===
   showDefaultHeroImage();
-
-  // === Close Preview Button ===
-  closeBtn?.addEventListener("click", hidePreviewModal);
-
-  // === Say Hi Modal Button ===
-  sayHiBtn?.addEventListener("click", () => {
-    alert("👋 You're awesome! Stay tuned for more vibes!");
-    document.getElementById("previewEndModal")?.classList.add("hidden");
-  });
-
-  // === Load Music Cards ===
   loadMusicCatalogue();
 
-  // === Listen Now Button Logic ===
-// === Listen Now Button Logic ===
-listenNowBtn?.addEventListener("click", () => {
-  const musicCards = [...cardsContainer.querySelectorAll(".music-card")];
-  if (!musicCards.length) return;
+  // === Close Modal Button ===
+  closeBtn?.addEventListener("click", hidePreviewModal);
 
-  const randomCard = musicCards[Math.floor(Math.random() * musicCards.length)];
-  const videoId = randomCard.querySelector(".play-btn")?.dataset?.videoId;
-  const imgEl = randomCard.querySelector("img");
-  const coverSrc = imgEl?.src;
+  // === Listen Now Random Button ===
+  listenNowBtn?.addEventListener("click", () => {
+    const cards = [...cardsContainer.querySelectorAll(".music-card")];
+    if (!cards.length) return;
 
-  heroImageContainer.innerHTML = '';
+    const card = cards[Math.floor(Math.random() * cards.length)];
+    const videoId = card.querySelector(".play-btn")?.dataset?.videoId;
+    const coverSrc = card.querySelector("img")?.src;
 
-  if (videoId && coverSrc) {
-    const wrapper = document.createElement("div");
-    wrapper.className = "now-playing-wrapper spinning-cd";
+    heroImageContainer.innerHTML = '';
 
-    const disc = document.createElement("div");
-    disc.className = "cd-disc";
+    if (videoId && coverSrc) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "now-playing-wrapper spinning-cd";
 
-    const img = document.createElement("img");
-    img.src = coverSrc;
-    img.alt = "Now Playing";
-    img.className = "cd-image";
+      const disc = document.createElement("div");
+      disc.className = "cd-disc";
 
-    disc.appendChild(img);
+      const img = document.createElement("img");
+      img.src = coverSrc;
+      img.alt = "Now Playing";
+      img.className = "cd-image";
 
-    const centerHole = document.createElement("div");
-    centerHole.className = "cd-hole";
+      disc.appendChild(img);
+      const centerHole = document.createElement("div");
+      centerHole.className = "cd-hole";
+      disc.appendChild(centerHole);
 
-    disc.appendChild(centerHole);
-    wrapper.appendChild(disc);
-    heroImageContainer.appendChild(wrapper);
+      wrapper.appendChild(disc);
+      heroImageContainer.appendChild(wrapper);
 
-    AOS.refresh();
-
-    // Play snippet
-    playHighlight(videoId, true); // manually triggered = no event
-
-    // Fallback: Show modal after 15s
-    setTimeout(() => {
-      const modal = document.getElementById("previewEndModal");
-      if (modal) {
-        if(modal.classList.contains("hidden")){
-          modal.classList.remove("hidden")
-        } else {
-          modal.classList.add("hidden");
-      }
+      AOS.refresh();
+      playHighlight(videoId, true); // manually triggered = no modal
     }
-      showDefaultHeroImage();
-    }, 15000); // match player timeout
+  });
+
+  // === Modal Logic ===
+  userNameInput?.addEventListener("input", () => {
+    userName = userNameInput.value.trim();
+    updateGreeting();
+    updateUnlockBtnState();
+  });
+
+  function updateGreeting() {
+    greetingText.innerHTML = userName.length > 0
+      ? `🎧 Hello <strong>${userName}</strong>, please share this vibe to unlock full access!`
+      : `🎧 Enjoying the vibe?`;
   }
-});
 
+  shareBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const platform = btn.dataset.platform;
+      const url = window.currentFallbackUrl || "https://youtube.com";
 
+      const encodedText = encodeURIComponent(`🎵 Check out this vibe from Minguni Dreamland!\n${url}`);
 
-  // === Dark Mode Logic ===
+      let shareUrl = "#";
+
+      switch (platform) {
+        case "whatsapp":
+          shareUrl = `https://wa.me/?text=${encodedText}`;
+          break;
+        case "twitter":
+          shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}`;
+          break;
+        case "instagram":
+          alert("📸 Instagram sharing must be done manually.");
+          return;
+        case "tiktok":
+          alert("🎬 TikTok sharing must be done manually.");
+          return;
+      }
+
+      window.open(shareUrl, "_blank");
+      hasShared = true;
+      updateUnlockBtnState();
+    });
+  });
+
+  function updateUnlockBtnState() {
+    unlockBtn.disabled = !(hasShared && userName.length > 0);
+  }
+
+  unlockBtn?.addEventListener("click", () => {
+    alert(`🎉 Thanks ${userName}! Full song unlocked.`);
+    allowFullPlayback(); // signal to allow full playback
+    modal.classList.add("hidden");
+  });
+
+  // === Modal Display Triggered by Preview End ===
+  window.addEventListener("highlightPreviewEnded", (e) => {
+    
+    console.log("🔥 highlightPreviewEnded received:", e.detail);
+
+    const modal = document.getElementById("previewEndModal");
+
+    showDefaultHeroImage();
+
+    if (modal) {
+      modal.classList.remove("hidden");
+      hasShared = false;
+      userName = "";
+      userNameInput.value = "";
+      updateGreeting();
+      updateUnlockBtnState();
+    }
+  });
+
+  // === Dark Mode Toggle ===
+  const darkToggleBtn = document.getElementById("darkModeToggle");
   const icon = darkToggleBtn?.querySelector("i");
   const root = document.documentElement;
-
-  function setThemeIcon(isDark) {
-    if (!icon) return;
-    icon.className = isDark ? "fa-regular fa-sun-bright" : "fa fa-moon";
-  }
 
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     root.classList.add("dark");
-    setThemeIcon(true);
-  } else {
-    setThemeIcon(false);
+    if (icon) icon.className = "fa-regular fa-sun-bright";
   }
 
   darkToggleBtn?.addEventListener("click", () => {
     const isDark = root.classList.toggle("dark");
     localStorage.setItem("theme", isDark ? "dark" : "light");
-    setThemeIcon(isDark);
+    if (icon) icon.className = isDark ? "fa-regular fa-sun-bright" : "fa fa-moon";
   });
 
-  // === Mobile Menu Toggle ===
+  // === Mobile Nav ===
+  const hamburgerBtn = document.getElementById("hamburgerToggle");
+  const hamburgerIcon = document.getElementById("hamburgerIcon");
+  const mobileMenu = document.getElementById("mobileMenu");
+
   hamburgerBtn?.addEventListener("click", () => {
     const isOpen = mobileMenu.classList.contains("active");
     hamburgerIcon.className = isOpen
       ? "fa-sharp fa-solid fa-bars"
       : "fa-sharp fa-solid fa-xmark";
-    mobileMenu.style.display = isOpen ? "none" : "flex";
 
+    mobileMenu.style.display = isOpen ? "none" : "flex";
     setTimeout(() => {
       mobileMenu.classList.toggle("active", !isOpen);
     }, isOpen ? 600 : 10);
@@ -154,18 +195,13 @@ listenNowBtn?.addEventListener("click", () => {
     });
   });
 
-  // === About Section Animations on Scroll (≥768px only) ===
+  // === About Section Animations ===
   const aboutSection = document.querySelector(".about");
   const aboutButtonWrapper = document.querySelector(".about__button-wrapper");
   const journeyContent = document.querySelector(".content-info-journey");
   const inspirationContent = document.querySelector(".content-info-inspiration");
 
-  if (
-    aboutSection &&
-    aboutButtonWrapper &&
-    journeyContent &&
-    inspirationContent
-  ) {
+  if (aboutSection && aboutButtonWrapper && journeyContent && inspirationContent) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const visible = entry.isIntersecting;
@@ -173,29 +209,34 @@ listenNowBtn?.addEventListener("click", () => {
         journeyContent.classList.toggle("animate", visible);
         inspirationContent.classList.toggle("animate", visible);
       },
-      { threshold: 0.15,
-        rootMargin: "0px 0px -20% 0px", // triggers before fully visible
-       }
-      
+      { threshold: 0.15, rootMargin: "0px 0px -20% 0px" }
     );
 
     observer.observe(aboutSection);
   }
-
-  // This remains
-    window.addEventListener("highlightPreviewEnded", (e) => {
-    const isManual = e.detail?.manuallyTriggered;
-
-    // Show modal only for automatic preview endings
-    if (!isManual) {
-      const modal = document.getElementById("previewEndModal");
-      if (modal) modal.classList.remove("hidden");
-    }
-
-    // ✅ Always restore the default hero image
-    showDefaultHeroImage();
-  });
-
-
-
 });
+
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-share");
+  if (!btn) return;
+
+  const platform = btn.dataset.platform;
+  const url = btn.dataset.url || window.currentFallbackUrl;
+
+  const encoded = encodeURIComponent(`🎵 Check out this vibe: ${url}`);
+
+  let link = "#";
+  switch (platform) {
+    case "whatsapp":
+      link = `https://wa.me/?text=${encoded}`; break;
+    case "twitter":
+      link = `https://twitter.com/intent/tweet?text=${encoded}`; break;
+    case "instagram":
+    case "tiktok":
+      alert(`Share manually via ${platform}.`); return;
+  }
+
+  window.open(link, "_blank");
+});
+

@@ -393,10 +393,12 @@
 
     <!-- ===Music Catalogue Section=== -->
     <!-- === YouTube Preview Modal === -->
-    <div id="ytPreviewModal" class="hidden">
-      <button id="closePreviewBtn" title="Close preview">&times;</button>
+    <!-- === YouTube Preview Modal === -->
+    <div id="ytPreviewModal" class="modal hidden">
+      <button id="closePreviewBtn" aria-label="Close Preview">&times;</button>
       <div id="ytPlayer"></div>
     </div>
+
 
     <section class="music-catalogue" id="music">
       <!-- Top Info Block -->
@@ -421,11 +423,23 @@
     <!-- === End of Highlight Modal === -->
     <div id="previewEndModal" class="modal hidden">
       <div class="modal-content">
-        <p>Enjoying the vibe? 👋</p>
-        <p>Say hi to listen to more!</p>
-        <button id="sayHiBtn">Say Hi</button>
+        <p id="greetingText">🎧 Enjoying the vibe?</p>
+        <p>Enter your name and share the song to unlock full access!</p>
+
+        <input type="text" id="userNameInput" placeholder="Your Name" />
+
+        <div class="share-buttons">
+          <button class="share-btn" data-platform="whatsapp">WhatsApp</button>
+          <button class="share-btn" data-platform="twitter">Twitter</button>
+          <button class="share-btn" data-platform="instagram">Instagram</button>
+          <button class="share-btn" data-platform="tiktok">TikTok</button>
+        </div>
+
+        <button id="unlockBtn" disabled>Unlock Full Music</button>
       </div>
     </div>
+
+
 
 
 

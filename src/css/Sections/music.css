@@ -91,6 +91,23 @@
   margin-bottom: -2rem;
 }
 
+.music-title.scroll {
+  display: inline-block;
+  animation: scroll-horizontal 6s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes scroll-horizontal {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+
+@keyframes scroll-horizontal {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
 .release-date {
   font-size: 0.85rem;
   color: var(--black-300);
@@ -153,6 +170,7 @@
 
 /* === Preview Modal === */
 #ytPreviewModal {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -165,17 +183,19 @@
   z-index: 9999;
 }
 
-#ytPreviewModal.hidden {
-  display: none;
+
+#ytPreviewModal.visible {
+  display: flex;
 }
 
 #ytPlayer {
-  max-width: 90vw;
-  width: 640px;
-  height: 360px;
-  background: black;
-  border-radius: 12px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
 }
+
 
 /* Close button (optional) */
 #closePreviewBtn {
@@ -188,6 +208,26 @@
   border: none;
   cursor: pointer;
 }
+
+
+#ytPreviewModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#ytPreviewModal.visible {
+  display: flex;
+}
+
+#ytPreviewModal.hidden {
+  display: none;
+}
+
 
 
 

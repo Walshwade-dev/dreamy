@@ -3,71 +3,151 @@ import { fallbackVideos } from './fallback-videos.js';
 let player;
 let previewTimeout;
 let apiReady = false;
-let highlightManuallyTriggered = false;
+let manuallyTriggered = false;
+let allowFull = false;
 
-// Optional: remember current video ID
-let currentVideoId = null;
+const ytPlayerDiv = document.getElementById("ytPlayer");
+const previewModal = document.getElementById("ytPreviewModal");
+const endModal = document.getElementById("previewEndModal");
 
-// ⏯️ External Trigger
+// Fallback audio element
+const fallbackAudio = new Audio();
+fallbackAudio.volume = 1;
+
+// === Load YouTube API ===
+const tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(tag);
+
+// YouTube API Ready
+window.onYouTubeIframeAPIReady = () => {
+  console.log("✅ YouTube IFrame API is ready");
+  player = new YT.Player("ytPlayer", {
+    height: "0",
+    width: "0",
+    events: {
+      onReady: () => {
+        apiReady = true;
+        console.log("✅ YouTube player is ready");
+      },
+      onStateChange: onPlayerStateChange,
+      onError: onPlayerError
+    }
+  });
+};
+
+// === Public API ===
+export function allowFullPlayback() {
+  allowFull = true;
+}
+
 export function playHighlight(videoId, isManual = false) {
-  highlightManuallyTriggered = isManual;
+  manuallyTriggered = isManual;
+  allowFull = isManual;
 
-  // ⛔ Stop any existing preview (including timeout + modal trigger)
-  if (player && typeof player.stopVideo === "function") {
-    player.stopVideo();
-  }
-  clearTimeout(previewTimeout);
+  console.log("🎬 playHighlight called with:", videoId);
 
-  // ✅ Set new video ID
-  currentVideoId = videoId;
+  const fallback = fallbackVideos.find(v => v.videoId === videoId);
+  const fallbackAudioUrl = fallback?.audio || `/audio/${videoId}.mp3`;
 
-  // Delay load if player isn't ready
+  window.lastVideoId = videoId;
+  window.currentFallbackUrl = fallback?.url || `https://youtube.com/watch?v=${videoId}`;
+
   if (!apiReady || !player || typeof player.loadVideoById !== "function") {
+    console.warn("⏳ Waiting for YouTube API...");
     setTimeout(() => playHighlight(videoId, isManual), 500);
     return;
   }
 
-  // Show modal
-  document.getElementById("ytPreviewModal").style.display = "block";
-  player.loadVideoById(videoId);
-
-  // Set new timeout only if not manually triggered
-  if (!isManual) {
-    previewTimeout = setTimeout(() => {
-      // Ensure we're still previewing the same video
-      if (currentVideoId === videoId) {
-        hidePreviewModal(); // Will fire custom event
-      }
-    }, 15000);
+  // Hide the YouTube modal - audio only
+  if (previewModal) {
+    previewModal.classList.remove("visible");
+    previewModal.classList.add("hidden");
   }
+
+  // Try YouTube
+  try {
+    player.loadVideoById(videoId);
+    console.log("▶️ Loading YouTube video:", videoId);
+  } catch (err) {
+    console.warn("⚠️ YouTube failed, trying local fallback", err);
+    playFallbackAudio(fallbackAudioUrl);
+  }
+
+  clearTimeout(previewTimeout);
 }
 
-// 🧹 Cleanup
+// === Hide Preview Modal ===
 export function hidePreviewModal() {
-  const modal = document.getElementById("ytPreviewModal");
-  if (modal) modal.style.display = "none";
+  if (previewModal) {
+    previewModal.classList.remove("visible");
+    previewModal.classList.add("hidden");
+  }
+
+  clearTimeout(previewTimeout);
 
   if (player && typeof player.stopVideo === "function") {
     player.stopVideo();
   }
 
-  clearTimeout(previewTimeout);
+  fallbackAudio.pause();
+  fallbackAudio.currentTime = 0;
 
-  // 🚫 Only dispatch modal if not manually triggered
-  if (!highlightManuallyTriggered) {
-    window.dispatchEvent(new Event("highlightPreviewEnded"));
+  if (!manuallyTriggered && !allowFull) {
+    const evt = new CustomEvent("highlightPreviewEnded", {
+      detail: { manuallyTriggered: false }
+    });
+    window.dispatchEvent(evt);
   }
 
-  highlightManuallyTriggered = false;
-  currentVideoId = null;
+  manuallyTriggered = false;
 }
 
-// 🎯 Optional: player state hook (if still using)
+// === YouTube Playback State ===
 function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.PLAYING) {
+  console.log("[YT State]", event.data);
+
+  if (event.data === YT.PlayerState.PLAYING && !allowFull) {
+    console.log("✅ YouTube is playing — starting 15s timer");
+
     clearTimeout(previewTimeout);
     previewTimeout = setTimeout(() => {
+      console.log("⏰ 15s up — stopping and showing unlock modal");
       hidePreviewModal();
+      showPreviewEndModal();
     }, 15000);
   }
+}
+
+// === On Error: fallback to local audio ===
+function onPlayerError(event) {
+  console.warn("❌ YouTube error", event.data);
+
+  const fallback = fallbackVideos.find(v => v.videoId === window.lastVideoId);
+  const fallbackAudioUrl = fallback?.audio || `/audio/${window.lastVideoId}.mp3`;
+
+  playFallbackAudio(fallbackAudioUrl);
+}
+
+// === Play fallback MP3 ===
+function playFallbackAudio(src) {
+  fallbackAudio.src = src;
+
+  fallbackAudio.play().then(() => {
+    console.log("🎵 Playing fallback audio");
+    previewTimeout = setTimeout(() => {
+      console.log("⏰ 15s fallback reached — stopping audio");
+      fallbackAudio.pause();
+      fallbackAudio.currentTime = 0;
+      showPreviewEndModal();
+    }, 15000);
+  }).catch(err => {
+    console.error("❌ Fallback audio failed to play:", err);
+    showPreviewEndModal();
+  });
+}
+
+// === Show Unlock Modal ===
+function showPreviewEndModal() {
+  if (endModal) endModal.classList.remove("hidden");
 }
