@@ -1,5 +1,9 @@
 import { loadMusicCatalogue } from './music-render.js';
 import { playHighlight, hidePreviewModal, allowFullPlayback } from './preview-player.js';
+import { loadEvents } from './events.js';
+
+
+
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -21,6 +25,8 @@ export function showDefaultHeroImage() {
 document.addEventListener("DOMContentLoaded", () => {
   // === AOS Animations ===
   AOS.init({ duration: 800, offset: 120 });
+
+  loadEvents();
 
   // === DOM Elements ===
   const listenNowBtn = document.getElementById("listenNowBtn");
