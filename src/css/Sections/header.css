@@ -10,6 +10,7 @@
   justify-content: space-between;
   align-items: center;
   z-index: 50;
+  padding: 0 1rem;
 }
 
 /* === Logo === */
@@ -59,15 +60,18 @@
   color: var(--color-white);
   cursor: pointer;
   display: inline-flex;
+  z-index: 10;
 }
 
 /* === Mobile Fullscreen Menu === */
 #mobileMenu {
-  display: none; /* add this line if missing */
+
+  display: none;
+  /* add this line if missing */
   position: absolute;
   top: 0;
   right: 0;
-  width: 90%;
+  width: 100%;
   background-color: var(--primary-color);
   flex-direction: column;
   justify-content: center;
@@ -78,6 +82,7 @@
   transform: translateX(100%);
   opacity: 0;
   pointer-events: none;
+  z-index: 5;
   transition:
     transform 0.6s ease-in,
     opacity 0.5s ease-in;
@@ -92,7 +97,7 @@
   pointer-events: auto;
 }
 
-#mobileMenu a{
+#mobileMenu a {
   width: 100%;
   text-align: center;
   border-bottom: 1px solid var(--black-200);
@@ -113,6 +118,7 @@
 /* === Responsive Breakpoints === */
 /* === Desktop Header Layout === */
 @media screen and (min-width: 900px) {
+
   /* Reset margins/paddings */
   .header__nav,
   .header__menu,
@@ -121,29 +127,32 @@
     padding: 0;
   }
 
-  .header__nav{
-    height:74px;
+  .header__nav {
+    height: 74px;
     /* padding: 1rem 1.5rem 0 0.2rem; */
   }
 
   .header__right-group {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 2rem;
-  overflow: hidden; /* prevent internal children from spilling */
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2rem;
+    overflow: hidden;
+    /* prevent internal children from spilling */
   }
 
   /* Restrict menu width inside its 50% container */
   .header__menu {
     flex: 1;
-    max-width: 90%;     /* 🔥 restrict to 90% of right half */
+    max-width: 90%;
+    /* 🔥 restrict to 90% of right half */
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 0;        /* helps with flexbox overflow issues */
+    min-width: 0;
+    /* helps with flexbox overflow issues */
   }
 
   .header__menu-list {
@@ -295,4 +304,3 @@
     font-size: 1.4rem;
   }
 }
-
