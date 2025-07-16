@@ -236,14 +236,14 @@
   font-family: var(--poiret-one);
   font-family: 'EagleHirozon', 'Plus Jakarta Sans', sans-serif;
   color: var(--secondary-color);
-  margin: 1.5rem 0 0.5rem 0;
+  margin: 1.5rem 0 1rem 1rem;
 }
 
 .hero-content__info {
   font-family: var(--plus-jakarta-sans);
   font-size: 1.1rem;
   color: var(--black-300);
-  margin: 3rem 1rem 0 0.5rem;
+  margin: 3rem 1rem 0 1.5rem;
   max-width: 600px;
 }
 
@@ -425,6 +425,7 @@
   font-family: var(--playfair-display);
   margin-bottom: -1.5rem;
   color: var(--primary-color);
+  font-size: 1.2rem;
 }
 
 .hero-content__advert-number h4 span {

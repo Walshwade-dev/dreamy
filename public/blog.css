@@ -24,8 +24,9 @@
 }
 
 .construction h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     color: var(--black-300);
+    color: #fff;
     margin-bottom: 1rem;
 }
 
@@ -52,7 +53,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#themeToggle{
+#themeToggle {
     background-color: var(--color-creamson);
     border: none;
     margin: 1rem;
