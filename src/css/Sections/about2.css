@@ -353,6 +353,11 @@
   .about__button-wrapper.animate {
     animation: slideInFromRight 0.8s ease-out forwards;
   }
+
+  .btn-learn-more::after {
+    padding-left: 0.75rem;
+    color: var(--black-400);
+  }
 }
 
 
