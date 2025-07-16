@@ -66,9 +66,9 @@
 /* === Mobile Fullscreen Menu === */
 #mobileMenu {
 
-  display: none;
+  opacity: 0;
   /* add this line if missing */
-  position: absolute;
+  position: fixed ;
   top: 0;
   right: 0;
   width: 100%;
@@ -89,7 +89,6 @@
 }
 
 #mobileMenu.active {
-  display: flex;
   justify-content: center;
   align-items: center;
   transform: translateX(0%);
