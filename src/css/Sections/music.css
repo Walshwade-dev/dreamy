@@ -34,16 +34,24 @@
 
 /* === Music Card === */
 .music-card {
-  background-color: var(--color-creamson);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  min-height: 460px;
+  max-height: 480px;
   display: flex;
   flex-direction: column;
-  height: 460px;
-  max-width: 450px;
-  transition: transform 0.3s ease;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-radius: 12px;
+  /* Make sure this exists */
+  overflow: hidden;
 }
+
+.hidden {
+  display: none !important;
+}
+
+
 
 .music-card:hover {
   transform: translateY(-3px);
@@ -52,6 +60,11 @@
 /* === Image Section === */
 .music-card__image {
   height: calc(100% - 6.5rem);
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
   background-color: #f5f5f5;
   overflow: hidden;
   display: flex;
@@ -62,10 +75,26 @@
 }
 
 .music-card__image img {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+
+.music-card__image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  transform: scale(1.1);
+  z-index: 1;
 }
 
 .music-card__image img.local-cover {
@@ -78,35 +107,78 @@
 .music-card__info {
   position: relative;
   height: 6.5rem;
-  padding: 0.4rem 0.1rem 0.5rem 1rem;
+  padding: 0.6rem 1rem 0.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  /* Glass + blend effect */
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-blend-mode: overlay;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--black-200);
 }
+
 
 .music-title {
-  font-size: 1rem;
-  white-space: nowrap;
+  position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: -2rem;
+  max-width: 100%;
+  height: 1.8rem;
+  margin-top: -0.3rem;
+  margin-bottom: -1rem;
 }
 
-.music-title.scroll {
-  display: inline-block;
-  animation: scroll-horizontal 6s linear infinite;
+.title-short {
+  display: block;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
 }
 
-@keyframes scroll-horizontal {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+.title-scroll {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  transform: translateX(0%);
+  opacity: 0;
+  pointer-events: none;
+  animation: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  color: inherit;
+}
+
+.music-title:hover .title-short {
+  opacity: 0;
+}
+
+.music-title:hover .title-scroll {
+  opacity: 1;
+  pointer-events: auto;
+  animation: scroll-full-title 8s linear infinite;
 }
 
 
-@keyframes scroll-horizontal {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+.scroll-on-hover:hover .music-title-inner {
+  animation: scroll-full-title 8s linear infinite;
+}
+
+
+@keyframes scroll-full-title {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 .release-date {
@@ -120,8 +192,13 @@
 }
 
 @keyframes scroll-title {
-  0% { text-indent: 0; }
-  100% { text-indent: -100%; }
+  0% {
+    text-indent: 0;
+  }
+
+  100% {
+    text-indent: -100%;
+  }
 }
 
 .card-actions {
@@ -141,7 +218,17 @@
 
 .card-actions button:hover {
   transform: scale(1.15);
+}
+
+
+.btn-like.liked {
   color: red;
+}
+
+.like-count {
+  font-size: 0.85rem;
+  margin-left: 0.4rem;
+  color: var(--secondary-color);
 }
 
 .play-btn {
@@ -166,7 +253,8 @@
 }
 
 .music-card__image {
-  position: relative; /* Required for absolute child */
+  position: relative;
+  /* Required for absolute child */
 }
 
 /* === Preview Modal === */
@@ -227,6 +315,87 @@
 
 #ytPreviewModal.hidden {
   display: none;
+}
+
+
+/* === Share Modal === */
+.share-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.share-modal.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.share-modal__content {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  position: relative;
+  animation: fadeInUp 0.4s ease;
+}
+
+.share-modal__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.share-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.share-option {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.share-option:hover {
+  transform: scale(1.05);
+  background-color: var(--secondary-color);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

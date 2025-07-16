@@ -20,14 +20,17 @@ export async function loadMusicCatalogue() {
     card.className = "music-card";
 
     card.innerHTML = `
-      <div class="music-card__image">
+      <div class="music-card__image" style="background-image: url('${cover}')">
         <img src="${cover}" alt="${video.title}" />
       </div>
       <div class="music-card__info">
-        <h3 class="music-title" title="${video.title}">${shortTitle}</h3>
+        <h3 class="music-title" title="${video.title}">
+          <span class="title-short">${shortTitle}</span>
+          <span class="music-title-inner">${video.title}</span>
+        </h3>
         <p class="release-date">${video.releaseDate}</p>
         <div class="card-actions">
-          <button class="btn-like"><i class="fa-solid fa-heart"></i></button>
+          <button class="btn-like"><i class="fa-solid fa-heart"></i><span class="like-count"></span></button>
           <button class="btn-share" data-url="${video.url}" data-video-id="${video.videoId}">
             <i class="fa-solid fa-paper-plane"></i>
           </button>
@@ -39,6 +42,105 @@ export async function loadMusicCatalogue() {
     `;
 
     cardsContainer.appendChild(card);
+
+    // Add this:
+    const scrollTitle = card.querySelector(".title-scroll");
+    const scrollContainer = card.querySelector(".music-title");
+
+    if (video.title.length > 20) {
+      scrollContainer.classList.add("scroll-on-hover");
+
+      // Wait until DOM is painted
+      requestAnimationFrame(() => {
+        const scrollWidth = scrollTitle.scrollWidth;
+        const containerWidth = scrollContainer.offsetWidth;
+
+        const distance = scrollWidth + containerWidth; // Full scroll across
+        const duration = Math.max(8, distance / 30); // e.g. 30px per second
+
+        scrollTitle.style.animation = `scroll-dynamic ${duration}s linear infinite`;
+        scrollTitle.style.minWidth = scrollWidth + 'px';
+      });
+    }
+
+    // Share Modal Events
+    const shareModal = document.getElementById("shareModal");
+    const closeBtn = shareModal.querySelector(".share-modal__close");
+    const options = shareModal.querySelectorAll(".share-option");
+
+    closeBtn.addEventListener("click", () => {
+      shareModal.classList.remove("visible");
+    });
+
+    shareModal.addEventListener("click", (e) => {
+      if (e.target.id === "shareModal") {
+        shareModal.classList.remove("visible");
+      }
+    });
+
+    options.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const url = encodeURIComponent(shareModal.dataset.url);
+        const text = encodeURIComponent("Check out this music!");
+        let link;
+
+        switch (btn.dataset.app) {
+          case "whatsapp":
+            link = `https://wa.me/?text=${text}%20${url}`;
+            break;
+          case "twitter":
+            link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+            break;
+          case "instagram":
+            alert("Instagram doesn't support direct link sharing via browser. Share manually.");
+            return;
+          case "copy":
+            navigator.clipboard.writeText(shareModal.dataset.url).then(() => {
+              btn.textContent = "Copied!";
+              setTimeout(() => (btn.textContent = "Copy Link"), 1500);
+            });
+            return;
+        }
+
+        window.open(link, "_blank");
+        shareModal.classList.remove("visible");
+      });
+    });
+
+
+    // === LIKE Button Logic ===
+    const likeBtn = card.querySelector(".btn-like");
+    const likeCount = likeBtn.querySelector(".like-count");
+    const storageKey = `like-${video.videoId}`;
+    const storedLike = localStorage.getItem(storageKey);
+
+    if (storedLike) {
+      likeBtn.classList.add("liked");
+      likeCount.textContent = "1";
+    }
+
+    likeBtn.addEventListener("click", () => {
+      if (likeBtn.classList.contains("liked")) {
+        likeBtn.classList.remove("liked");
+        likeCount.textContent = "";
+        localStorage.removeItem(storageKey);
+      } else {
+        likeBtn.classList.add("liked");
+        likeCount.textContent = "1";
+        localStorage.setItem(storageKey, "1");
+      }
+    });
+
+    // === SHARE Button Logic ===
+    const shareBtn = card.querySelector(".btn-share");
+    shareBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const modal = document.getElementById("shareModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("visible");
+      modal.dataset.url = shareBtn.dataset.url;
+    });
   });
 
   cardsContainer.addEventListener("click", (e) => {
