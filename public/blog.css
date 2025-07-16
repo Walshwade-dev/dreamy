@@ -32,7 +32,7 @@
 
 .construction p {
     font-size: 3rem;
-    color: var(--color-white);
+    color: #fff;
     margin-bottom: 2rem;
 }
 
@@ -59,6 +59,6 @@
     margin: 1rem;
     padding: 0.5rem 1rem;
     font-size: 3.5rem;
-    color: var(--black-500);
+    color: #fff;
     cursor: pointer;
 }
