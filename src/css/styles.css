@@ -11,6 +11,8 @@
 @import url('./Sections/music.css');
 @import url('./Sections/modal.css');
 @import url('./Sections/event.css');
+@import url('./Sections/comments.css');
+@import url('./Sections/footer.css');
 
 
 @font-face {

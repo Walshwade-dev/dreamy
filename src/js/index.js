@@ -1,6 +1,8 @@
 import { loadMusicCatalogue } from './music-render.js';
 import { playHighlight, hidePreviewModal, allowFullPlayback } from './preview-player.js';
 import { loadEvents } from './events.js';
+import { loadComments } from './comments.js';
+
 
 
 
@@ -27,6 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
   AOS.init({ duration: 800, offset: 120 });
 
   loadEvents();
+  loadComments();
+
+
+  document.getElementById("footerYear").textContent = new Date().getFullYear();
+
+  const scrollBtn = document.querySelector(".scroll-to-top");
+  scrollBtn.addEventListener("click", () => {
+    document.getElementById("home")?.scrollIntoView({
+      behavior: "smooth"
+    });
+  });
 
   // === DOM Elements ===
   const listenNowBtn = document.getElementById("listenNowBtn");

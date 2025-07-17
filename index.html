@@ -386,6 +386,47 @@
 
   <!-- === Upcoming Events Section End === -->
 
+  <!-- === Comments Section === -->
+  <section class="comments-section">
+    <h2>Leave a Comment</h2>
+    <form id="commentForm" class="comment-form">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" placeholder="Enter your name" required />
+
+      <label for="comment">Your Comment</label>
+      <textarea id="comment" placeholder="Share your thoughts..." required></textarea>
+
+      <button type="submit" class="post-btn">
+        <i class="fa-solid fa-paper-plane"></i> Post Comment
+      </button>
+    </form>
+
+    <div class="fan-comments hidden" id="fanComments">
+      <h3>Fan Comments</h3>
+      <div id="commentsContainer" class="comments-container"></div>
+    </div>
+  </section>
+
+  <!-- === End of comments section === -->
+
+
+  <!-- === Footer section ==== -->
+  <footer class="site-footer">
+    <p>
+      &copy; <span id="footerYear"></span> All Rights Reserved
+    </p>
+
+    <div class="footer-socials">
+      <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+
+    <button class="scroll-to-top" aria-label="Scroll to Top">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+  </footer>
+
 
 
   <!-- === End of Highlight Modal === -->
