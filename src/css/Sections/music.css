@@ -204,7 +204,7 @@
   background-color: var(--secondary-color);
   border: none;
   border-radius: 50%;
-  color: white;
+  color: var(--primary-color);
   padding: 0.6rem;
   font-size: 1rem;
   cursor: pointer;
@@ -214,6 +214,7 @@
 
 .play-btn:hover {
   background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .music-card__image {

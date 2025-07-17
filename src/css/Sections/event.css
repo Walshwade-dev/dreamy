@@ -1,5 +1,6 @@
 /* src/css/Sections/event.css */
 .events {
+  position: relative;
   padding: 2rem 1rem;
   background: var(--color-creamson);
   color: var(--black-500);
@@ -7,10 +8,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 
 .events__header {
-  
+
   text-align: center;
   font-size: 1.3rem;
   margin-bottom: 2rem;
@@ -19,19 +21,20 @@
 
 .events__header h2 {
   font-family: var(--playfair-display);
-  color: var(--primary-color);
+  color: var(--secondary-color);
 
 }
 
 .events__header p {
   font-family: var(--plus-jakarta-sans);
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .events__cards {
   display: grid;
-  gap:6rem;
+  gap: 6rem;
   grid-template-columns: 1fr;
+  margin-bottom: 10rem;
 }
 
 .event-card {
@@ -40,7 +43,7 @@
   max-width: 450px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -95,6 +98,119 @@
   cursor: not-allowed;
 }
 
+
+/* Container centering */
+#events__subscribe {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--primary-color);
+  color: var(--black-200);
+}
+
+#events__subscribe p {
+  margin: 0 0 0.9rem 0;
+}
+
+/* Oval button styling */
+#events__subscribe button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border: 2px solid var(--secondary-color);
+  border-radius: 999px;
+  /* Oval shape */
+  background: transparent;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#events__subscribe button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+
+
+/* Confetti animation */
+.confetti-wrapper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.confetti {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: hsl(calc(360 * var(--hue, 0)), 70%, 60%);
+  animation: fall 3s linear infinite;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+/* Subscription modal */
+.subscribe-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.subscribe-modal__content {
+  background: var(--primary-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInUp 0.4s ease;
+}
+
+.subscribe-modal__content h2 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.subscribe-modal__close {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
 /* Tablet View */
 @media (min-width: 600px) {
   .events__cards {
@@ -106,5 +222,6 @@
 @media (min-width: 900px) {
   .events__cards {
     grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 0;
   }
 }
