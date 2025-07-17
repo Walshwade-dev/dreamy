@@ -22,6 +22,8 @@
 .music-catalogue__header p {
   font-family: var(--plus-jakarta-sans);
   font-size: 1rem;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 /* === Cards Container === */
@@ -30,6 +32,7 @@
   grid-template-columns: 1fr;
   gap: 3rem;
   width: 100%;
+  margin: 0 auto;
 }
 
 /* === Music Card === */
@@ -81,7 +84,7 @@
   height: auto;
   max-height: 100%;
   object-fit: contain;
-  border-radius: inherit;
+  border-radius: none;
 }
 
 
@@ -155,50 +158,11 @@
   color: inherit;
 }
 
-.music-title:hover .title-short {
-  opacity: 0;
-}
-
-.music-title:hover .title-scroll {
-  opacity: 1;
-  pointer-events: auto;
-  animation: scroll-full-title 8s linear infinite;
-}
-
-
-.scroll-on-hover:hover .music-title-inner {
-  animation: scroll-full-title 8s linear infinite;
-}
-
-
-@keyframes scroll-full-title {
-  from {
-    transform: translateX(0%);
-  }
-
-  to {
-    transform: translateX(-100%);
-  }
-}
 
 .release-date {
   font-size: 0.85rem;
-  color: var(--black-300);
+  color: var(--black-200);
   margin-bottom: -2rem;
-}
-
-.music-title:hover {
-  animation: scroll-title 5s linear infinite;
-}
-
-@keyframes scroll-title {
-  0% {
-    text-indent: 0;
-  }
-
-  100% {
-    text-indent: -100%;
-  }
 }
 
 .card-actions {
@@ -427,9 +391,8 @@
 /* === Desktop: 4 Columns & Centered Layout === */
 @media (min-width: 900px) {
   .music-catalogue__cards {
-    grid-template-columns: repeat(3, 1fr);
-    width: 90vw;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 3fr));
+    place-items: center;
   }
 
   .music-catalogue__header {

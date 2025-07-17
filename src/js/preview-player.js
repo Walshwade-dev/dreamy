@@ -148,6 +148,14 @@ function playFallbackAudio(src) {
 }
 
 // === Show Unlock Modal ===
-function showPreviewEndModal() {
-  if (endModal) endModal.classList.remove("hidden");
+export function showPreviewEndModal() {
+  if (endModal) {  
+    endModal.classList.remove("hidden");
+    endModal.classList.add("visible");
+
+    const evt = new CustomEvent("previewUnlockRequired", {
+      detail: { videoId: window.lastVideoId }
+    });
+    window.dispatchEvent(evt);
+  }
 }

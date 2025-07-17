@@ -56,36 +56,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const cards = [...cardsContainer.querySelectorAll(".music-card")];
     if (!cards.length) return;
 
-    const card = cards[Math.floor(Math.random() * cards.length)];
-    const videoId = card.querySelector(".play-btn")?.dataset?.videoId;
-    const coverSrc = card.querySelector("img")?.src;
+    const randomCard = cards[Math.floor(Math.random() * cards.length)];
+    const playBtn = randomCard.querySelector(".play-btn");
+    const coverSrc = randomCard.querySelector("img")?.src;
 
+    if (!playBtn || !coverSrc) return;
+
+    // Optional: CD spin logic
     heroImageContainer.innerHTML = '';
 
-    if (videoId && coverSrc) {
-      const wrapper = document.createElement("div");
-      wrapper.className = "now-playing-wrapper spinning-cd";
+    const wrapper = document.createElement("div");
+    wrapper.className = "now-playing-wrapper spinning-cd";
 
-      const disc = document.createElement("div");
-      disc.className = "cd-disc";
+    const disc = document.createElement("div");
+    disc.className = "cd-disc";
 
-      const img = document.createElement("img");
-      img.src = coverSrc;
-      img.alt = "Now Playing";
-      img.className = "cd-image";
+    const img = document.createElement("img");
+    img.src = coverSrc;
+    img.alt = "Now Playing";
+    img.className = "cd-image";
 
-      disc.appendChild(img);
-      const centerHole = document.createElement("div");
-      centerHole.className = "cd-hole";
-      disc.appendChild(centerHole);
+    const centerHole = document.createElement("div");
+    centerHole.className = "cd-hole";
 
-      wrapper.appendChild(disc);
-      heroImageContainer.appendChild(wrapper);
+    disc.appendChild(img);
+    disc.appendChild(centerHole);
+    wrapper.appendChild(disc);
+    heroImageContainer.appendChild(wrapper);
 
-      AOS.refresh();
-      playHighlight(videoId, true); // manually triggered = no modal
-    }
+    AOS.refresh();
+
+    // ✅ Simulate real click
+    playBtn.click();
   });
+
+
 
   // === Modal Logic ===
   userNameInput?.addEventListener("input", () => {
@@ -142,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Modal Display Triggered by Preview End ===
   window.addEventListener("highlightPreviewEnded", (e) => {
-    
+
     console.log("🔥 highlightPreviewEnded received:", e.detail);
 
     const modal = document.getElementById("previewEndModal");

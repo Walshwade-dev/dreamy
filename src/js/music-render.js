@@ -43,25 +43,6 @@ export async function loadMusicCatalogue() {
 
     cardsContainer.appendChild(card);
 
-    // Add this:
-    const scrollTitle = card.querySelector(".title-scroll");
-    const scrollContainer = card.querySelector(".music-title");
-
-    if (video.title.length > 20) {
-      scrollContainer.classList.add("scroll-on-hover");
-
-      // Wait until DOM is painted
-      requestAnimationFrame(() => {
-        const scrollWidth = scrollTitle.scrollWidth;
-        const containerWidth = scrollContainer.offsetWidth;
-
-        const distance = scrollWidth + containerWidth; // Full scroll across
-        const duration = Math.max(8, distance / 30); // e.g. 30px per second
-
-        scrollTitle.style.animation = `scroll-dynamic ${duration}s linear infinite`;
-        scrollTitle.style.minWidth = scrollWidth + 'px';
-      });
-    }
 
     // Share Modal Events
     const shareModal = document.getElementById("shareModal");
