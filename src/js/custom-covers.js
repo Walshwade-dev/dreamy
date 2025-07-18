@@ -6,8 +6,7 @@ export const customCovers = {
   '8VzM_jA6HBE': '/images/webp/kwongela.webp',
   'WS0o9gKsnRY': '/images/webp/memories.webp',
   'JTCiX7GTHW4': '/images/webp/gamble.webp',
-
-  // existing...
+  'KnG5cYh4d2w': '/images/webpp/mikatiko/webp',
   'about-saxa': '/images/webp/saxa.webp',
   'about-pallet': '/images/webp/pallet.webp'
 };

@@ -11,6 +11,20 @@ import { customCovers } from './custom-covers.js';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+
+
+
+const scrollBtn = document.querySelector('.scroll-to-top');
+
+window.addEventListener('scroll', () => {
+  scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+
+scrollBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
 export function showDefaultHeroImage() {
   const heroImageContainer = document.getElementById("heroImageContainer");
   if (!heroImageContainer) return;
@@ -34,16 +48,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const imgSaxa = document.querySelector('.saxa');
-  const imgPallet = document.querySelector('.pallet');
+  const imgTwo = document.querySelector('.img-two');
+
+
+  if (imgTwo && customCovers['about-pallet']) {
+    imgTwo.src = customCovers['about-pallet'];
+  }
+
 
   if (imgSaxa && customCovers['about-saxa']) {
     imgSaxa.src = customCovers['about-saxa'];
   }
 
-  if (imgPallet && customCovers['about-pallet']) {
-    imgPallet.src = customCovers['about-pallet'];
-  }
-
+  
 
   document.getElementById("footerYear").textContent = new Date().getFullYear();
 

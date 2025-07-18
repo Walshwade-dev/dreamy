@@ -30,24 +30,3 @@
 .footer-socials a:hover {
     color: var(--accent-color, crimson);
 }
-
-/* Fixed button visible above the footer */
-.scroll-to-top {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    background: var(--secondary-color);
-    color: var(--color-creamson);
-    border: none;
-    border-radius: 50%;
-    padding: 0.65rem 0.75rem;
-    cursor: pointer;
-    font-size: 1rem;
-    z-index: 999;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s ease;
-}
-
-.scroll-to-top:hover {
-    transform: translateY(-3px);
-}
