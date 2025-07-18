@@ -1,9 +1,9 @@
 import { fetchYouTubeVideos } from './youtube-fetch.js';
 import { customCovers } from './custom-covers.js';
 import { playHighlight } from './preview-player.js';
-
 import { fetchSongs } from './firebase/fetchSongs.js';
 import { createMusicCard } from './music-card.js';
+import { loadComments } from './comments.js'; // If songId-specific
 
 let lastTapTime = 0;
 
@@ -11,7 +11,6 @@ export async function loadMusicCatalogue() {
   const cardsContainer = document.querySelector(".music-catalogue__cards");
   if (!cardsContainer) return;
 
-  // === Try to load Firebase songs first
   const songs = await fetchSongs();
 
   if (songs.length > 0) {
@@ -19,51 +18,13 @@ export async function loadMusicCatalogue() {
       const card = createMusicCard(song);
       cardsContainer.appendChild(card);
 
-      const likeBtn = card.querySelector(".btn-like");
-      const playBtn = card.querySelector(".play-btn");
-      const shareBtn = card.querySelector(".btn-share");
-      const likeCount = likeBtn.querySelector(".like-count");
-      const storageKey = `like-${song.id}`;
-      const storedLike = localStorage.getItem(storageKey);
-
-      if (storedLike) {
-        likeBtn.classList.add("liked");
-        likeCount.textContent = storedLike;
-      }
-
-      likeBtn.addEventListener("click", () => {
-        let count = parseInt(likeCount.textContent) || 0;
-        const liked = likeBtn.classList.toggle("liked");
-        if (liked) {
-          count++;
-          localStorage.setItem(storageKey, count);
-        } else {
-          count = Math.max(0, count - 1);
-          localStorage.removeItem(storageKey);
-        }
-        likeCount.textContent = count;
-      });
-
-      playBtn.addEventListener("click", () => {
-        const now = Date.now();
-        if (now - lastTapTime < 400) {
-          window.open(`https://www.youtube.com/watch?v=${song.id}`, "_blank");
-          lastTapTime = 0;
-        } else {
-          playHighlight(song.id);
-          lastTapTime = now;
-        }
-      });
-
-      shareBtn.addEventListener("click", () => {
-        const modal = document.getElementById("shareModal");
-        modal.classList.remove("hidden");
-        modal.classList.add("visible");
-        modal.dataset.url = `https://www.youtube.com/watch?v=${song.id}`;
+      attachCardEvents({
+        card,
+        id: song.id,
+        isFirebase: true
       });
     });
   } else {
-    // 🔄 Fallback to YouTube if no Firebase songs
     loadFallbackVideos(cardsContainer);
   }
 }
@@ -102,47 +63,69 @@ async function loadFallbackVideos(container) {
 
     container.appendChild(card);
 
-    const likeBtn = card.querySelector(".btn-like");
-    const likeCount = card.querySelector(".like-count");
-    const shareBtn = card.querySelector(".btn-share");
-    const playBtn = card.querySelector(".play-btn");
-
-    // === Like
-    const storageKey = `like-${video.videoId}`;
-    if (localStorage.getItem(storageKey)) {
-      likeBtn.classList.add("liked");
-      likeCount.textContent = "1";
-    }
-
-    likeBtn.addEventListener("click", () => {
-      const liked = likeBtn.classList.toggle("liked");
-      if (liked) {
-        likeCount.textContent = "1";
-        localStorage.setItem(storageKey, "1");
-      } else {
-        likeCount.textContent = "0";
-        localStorage.removeItem(storageKey);
-      }
-    });
-
-    // === Play
-    playBtn.addEventListener("click", () => {
-      const now = Date.now();
-      if (now - lastTapTime < 400) {
-        window.open(`https://www.youtube.com/watch?v=${video.videoId}`, "_blank");
-        lastTapTime = 0;
-      } else {
-        playHighlight(video.videoId);
-        lastTapTime = now;
-      }
-    });
-
-    // === Share
-    shareBtn.addEventListener("click", () => {
-      const modal = document.getElementById("shareModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("visible");
-      modal.dataset.url = shareBtn.dataset.url;
+    attachCardEvents({
+      card,
+      id: video.videoId,
+      shareUrl: video.url,
+      isFirebase: false
     });
   });
+}
+
+function attachCardEvents({ card, id, shareUrl, isFirebase }) {
+  const likeBtn = card.querySelector(".btn-like");
+  const likeCount = likeBtn.querySelector(".like-count");
+  const playBtn = card.querySelector(".play-btn");
+  const shareBtn = card.querySelector(".btn-share");
+
+  const storageKey = `like-${id}`;
+  const storedLike = localStorage.getItem(storageKey);
+
+  if (storedLike) {
+    likeBtn.classList.add("liked");
+    likeCount.textContent = storedLike;
+  }
+
+  likeBtn.addEventListener("click", () => {
+    let count = parseInt(likeCount.textContent) || 0;
+    const liked = likeBtn.classList.toggle("liked");
+
+    if (liked) {
+      count++;
+      localStorage.setItem(storageKey, count);
+    } else {
+      count = Math.max(0, count - 1);
+      localStorage.removeItem(storageKey);
+    }
+
+    likeCount.textContent = count;
+  });
+
+  playBtn.addEventListener("click", () => {
+    const now = Date.now();
+
+    window.currentSongId = id;
+    loadComments(id);
+
+    if (now - lastTapTime < 400) {
+      window.open(`https://www.youtube.com/watch?v=${id}`, "_blank");
+      lastTapTime = 0;
+    } else {
+      playHighlight(id);
+      lastTapTime = now;
+    }
+  });
+
+  shareBtn.addEventListener("click", () => {
+    const modal = document.getElementById("shareModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("visible");
+    modal.dataset.url = shareUrl || `https://www.youtube.com/watch?v=${id}`;
+  });
+
+  // 🔄 Optionally load comments for Firebase songs
+  if (isFirebase) {
+    window.currentSongId = id;
+    loadComments(id);
+  }
 }

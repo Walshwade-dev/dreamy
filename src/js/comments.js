@@ -1,7 +1,8 @@
+import { fetchComments } from './firebase/fetchComments.js';
 import { saveComment } from './firebase/saveComment.js';
 
 
-export function loadComments() {
+export function loadComments(songId) {
     const form = document.getElementById("commentForm");
     const commentsList = document.getElementById("commentsContainer");
     const fanCommentsSection = document.getElementById("fanComments");
@@ -9,15 +10,18 @@ export function loadComments() {
 
     if (!form || !commentsList || !fanCommentsSection) return;
 
-    // 🔹 INITIAL CHECK: Are there comments?
-    if (commentsList.children.length === 0) {
-        fanCommentsSection.classList.remove("hidden"); // Show section
-        if (noCommentsText) noCommentsText.style.display = "block"; // Show "be the first" message
-    } else {
-        if (noCommentsText) noCommentsText.style.display = "none"; // Hide message if comments exist
-    }
+    fetchComments(songId).then(comments => {
+        if (comments.length > 0) {
+            fanCommentsSection.classList.remove("hidden");
+            if (noCommentsText) noCommentsText.style.display = "none";
+            comments.forEach(renderComment);
+        } else {
+            fanCommentsSection.classList.remove("hidden");
+            if (noCommentsText) noCommentsText.style.display = "block";
+        }
+    });
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const name = form.name.value.trim();
@@ -26,20 +30,18 @@ export function loadComments() {
         if (!name || !message) return;
 
         const comment = {
-            songId,
-            name: form.name.value,
-            message: form.comment.value,
+            name,
+            message,
             timestamp: Date.now()
         };
 
-        saveComment(comment);
-        renderComment(comment);
-
+        const saved = await saveComment(comment);
+        renderComment(saved);
+        form.reset();
         fanCommentsSection.classList.remove("hidden");
-
-        // 🔹 Once a comment is posted, hide "be the first"
         if (noCommentsText) noCommentsText.style.display = "none";
     });
+
 
     function renderComment(comment) {
         const commentCard = document.createElement("div");
