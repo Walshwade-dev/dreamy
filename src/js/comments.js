@@ -1,3 +1,6 @@
+import { saveComment } from './firebase/saveComment.js';
+
+
 export function loadComments() {
     const form = document.getElementById("commentForm");
     const commentsList = document.getElementById("commentsContainer");
@@ -23,14 +26,14 @@ export function loadComments() {
         if (!name || !message) return;
 
         const comment = {
-            id: `c-${Date.now()}`,
-            name,
-            message,
+            songId,
+            name: form.name.value,
+            message: form.comment.value,
             timestamp: Date.now()
         };
 
+        saveComment(comment);
         renderComment(comment);
-        form.reset();
 
         fanCommentsSection.classList.remove("hidden");
 
