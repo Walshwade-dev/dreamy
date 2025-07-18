@@ -1,0 +1,63 @@
+.support-section {
+    width: 90vw;
+    background: linear-gradient(to right, orange, gold);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 10px;
+    margin: 1rem auto;
+}
+
+.support-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.support-section p {
+    font-size: 1rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+}
+
+.support-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.support-btn {
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.support-btn:hover {
+    transform: scale(1.05);
+}
+
+.coffee-btn {
+    background-color: #6f4e37;
+    /* brown */
+    color: white;
+}
+
+.subscribe-btn {
+    background-color: #ff4d4d;
+    /* red */
+    color: white;
+}
+
+@media (min-width: 600px) {
+    .support-buttons {
+        flex-direction: row;
+    }
+}

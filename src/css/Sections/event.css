@@ -1,18 +1,16 @@
 /* src/css/Sections/event.css */
 .events {
   position: relative;
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0 1rem;
   background: var(--color-creamson);
   color: var(--black-500);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 .events__header {
-
   text-align: center;
   font-size: 1.3rem;
   margin-bottom: 2rem;
@@ -34,7 +32,6 @@
   display: grid;
   gap: 6rem;
   grid-template-columns: 1fr;
-  margin-bottom: 10rem;
 }
 
 .event-card {
@@ -101,17 +98,16 @@
 
 /* Container centering */
 #events__subscribe {
-  position: absolute;
-  bottom: 0;
   width: 100vw;
   text-align: center;
   padding: 2rem 1rem;
   background: var(--primary-color);
   color: var(--black-200);
+  margin-top: 3rem;
 }
 
 #events__subscribe p {
-  margin: 0 0 0.9rem 0;
+  margin: 2rem auto;
 }
 
 /* Oval button styling */

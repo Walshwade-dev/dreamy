@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     imgSaxa.src = customCovers['about-saxa'];
   }
 
-  
+
 
   document.getElementById("footerYear").textContent = new Date().getFullYear();
 
@@ -294,3 +294,8 @@ document.addEventListener("click", (e) => {
   window.open(link, "_blank");
 });
 
+document.getElementById("subscribeBtn").addEventListener("click", function () {
+  this.innerHTML = '<i class="fa-solid  fa-burst"></i> Subscribed';
+  this.style.backgroundColor = "green"; // Optional: change color
+  this.disabled = true; // Optional: disable after subscribing
+});
