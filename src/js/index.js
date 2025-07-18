@@ -2,6 +2,7 @@ import { loadMusicCatalogue } from './music-render.js';
 import { playHighlight, hidePreviewModal, allowFullPlayback } from './preview-player.js';
 import { loadEvents } from './events.js';
 import { loadComments } from './comments.js';
+import { customCovers } from './custom-covers.js';
 
 
 
@@ -30,6 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadEvents();
   loadComments();
+
+
+  const imgSaxa = document.querySelector('.saxa');
+  const imgPallet = document.querySelector('.pallet');
+
+  if (imgSaxa && customCovers['about-saxa']) {
+    imgSaxa.src = customCovers['about-saxa'];
+  }
+
+  if (imgPallet && customCovers['about-pallet']) {
+    imgPallet.src = customCovers['about-pallet'];
+  }
 
 
   document.getElementById("footerYear").textContent = new Date().getFullYear();

@@ -7,7 +7,7 @@ export const eventsData = [
     title: "Live at Machakos",
     date: "2025-08-15",
     location: "Machakos, Peoples Park, Machakos County",
-    image: "/images/events/peoples.png",
+    image: "/images/events/peoples.webp",
     soldOut: false,
     ticketLink: "#"
   },
@@ -17,7 +17,7 @@ export const eventsData = [
     title: "The Love Sound Podcast",
     date: "2025-08-22",
     location: "Spotify / Apple Podcasts",
-    image: "/images/events/podcast.png",
+    image: "/images/events/podcast.webp",
     soldOut: false,
     subscribeLink: "#"
   },
@@ -27,7 +27,7 @@ export const eventsData = [
     title: "Mushie FM Feature",
     date: "2025-09-01",
     location: "Radio Citizen 104.3 FM",
-    image: "/images/events/acoustic.png",
+    image: "/images/events/acoustic.webp",
     soldOut: true,
     notifyLink: "#"
   }

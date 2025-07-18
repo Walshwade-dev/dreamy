@@ -21,7 +21,7 @@ export async function loadMusicCatalogue() {
 
     card.innerHTML = `
       <div class="music-card__image" style="background-image: url('${cover}')">
-        <img src="${cover}" alt="${video.title}" />
+        <img src="${cover}" alt="${video.title}" loading="lazy"/>
       </div>
       <div class="music-card__info">
         <h3 class="music-title" title="${video.title}">
