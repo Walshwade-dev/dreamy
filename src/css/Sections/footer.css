@@ -1,12 +1,11 @@
 .site-footer {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: var(--color-creamson);
+    color: var(--black-500);
     text-align: center;
     padding: 2rem 1rem;
     font-size: 0.95rem;
     position: relative;
     z-index: 1;
-    margin-top: 3rem;
     box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -24,7 +23,7 @@
 }
 
 .footer-socials a {
-    color: var(--primary-color);
+    color: var(--black-500);
     transition: color 0.3s ease;
 }
 
@@ -37,8 +36,8 @@
     position: fixed;
     bottom: 1.5rem;
     right: 1.5rem;
-    background: var(--primary-color);
-    color: var(--secondary-color);
+    background: var(--secondary-color);
+    color: var(--color-creamson);
     border: none;
     border-radius: 50%;
     padding: 0.65rem 0.75rem;

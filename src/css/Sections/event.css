@@ -118,11 +118,11 @@
 #events__subscribe button {
   padding: 0.75rem 2rem;
   font-size: 1rem;
-  border: 2px solid var(--secondary-color);
+  border: 2px solid var(--black-200);
   border-radius: 999px;
   /* Oval shape */
   background: transparent;
-  color: var(--secondary-color);
+  color: var(--black-200);
   cursor: pointer;
   transition: all 0.3s ease;
 }

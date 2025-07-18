@@ -175,13 +175,14 @@
 .card-actions button {
   all: unset;
   cursor: pointer;
-  color: var(--secondary-color);
+  color: var(--black-200);
   font-size: 1.2rem;
   transition: transform 0.2s ease;
 }
 
 .card-actions button:hover {
   transform: scale(1.15);
+  color: var(--black-300);
 }
 
 
@@ -201,10 +202,10 @@
   right: 1rem;
   width: 2.5rem;
   height: 2.5rem;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   border: none;
   border-radius: 50%;
-  color: var(--primary-color);
+  color: var(--black-200);
   padding: 0.6rem;
   font-size: 1rem;
   cursor: pointer;
@@ -213,8 +214,8 @@
 }
 
 .play-btn:hover {
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
+  background-color: var(--black-500);
+  color: var(--primary-color);
 }
 
 .music-card__image {
